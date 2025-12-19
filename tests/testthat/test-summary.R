@@ -1,10 +1,12 @@
-# Simple test vectors
+# Test vectors
 x_na <- c(1, NA, 3)
 x_clean <- c(1, 2, 3)
 x_nan <- c(1, NaN, 3)
 x_inf <- c(1, Inf, 3)
-x_neginf <- c(1, -Inf, 3)
+x_neginf <- c(-Inf, 2, 3)
 x_mixed <- c(1, NA, NaN, Inf, 5)
+x_for_prod <- c(2, NA, 3)
+x_for_quantile <- c(1, NA, 2, 3, 4)
 
 # mean ----
 test_that("mean removes NA and warns by default", {
@@ -70,7 +72,7 @@ test_that("sum handles Inf", {
 
 # prod ----
 test_that("prod removes NA and warns", {
-  expect_warning(result <- prod(c(2, NA, 3)), "missing value")
+  expect_warning(result <- prod(x_for_prod), "missing value")
   expect_equal(result, 6)
 })
 
@@ -129,10 +131,7 @@ test_that("median handles -Inf", {
 
 # quantile ----
 test_that("quantile removes NA and warns", {
-  expect_warning(
-    result <- quantile(c(1, NA, 2, 3, 4), probs = 0.5),
-    "missing value"
-  )
+  expect_warning(result <- quantile(x_for_quantile, probs = 0.5), "missing value")
   expect_equal(unname(result), 2.5)
 })
 

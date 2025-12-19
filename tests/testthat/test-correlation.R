@@ -1,9 +1,11 @@
-# Simple test vectors
+# Test vectors and matrices
 x_na <- c(1, 2, NA, 4)
 y_clean <- c(2, 4, 6, 8)
 x_clean <- c(1, 2, 3, 4)
 x_nan <- c(1, NaN, 3, 4)
 x_inf <- c(1, 2, 3, Inf)
+mat_with_na <- matrix(c(1, 2, 3, 4, 5, NA), nrow = 3)
+mat_clean <- matrix(1:6, nrow = 3)
 
 # cor with vectors ----
 test_that("cor warns with pairwise.complete.obs", {
@@ -33,15 +35,13 @@ test_that("cor handles Inf values", {
 
 # cor matrix ----
 test_that("cor matrix works", {
-  mat <- matrix(c(1, 2, 3, 4, 5, NA), nrow = 3)
-  expect_warning(result <- cor(mat), "pairwise")
+  expect_warning(result <- cor(mat_with_na), "pairwise")
   expect_true(is.matrix(result))
   expect_equal(dim(result), c(2, 2))
 })
 
 test_that("cor matrix with no NA produces no warning", {
-  mat <- matrix(1:6, nrow = 3)
-  expect_no_warning(result <- cor(mat))
+  expect_no_warning(result <- cor(mat_clean))
   expect_true(is.matrix(result))
 })
 

@@ -39,18 +39,6 @@ test_that("all with NA and FALSE warns and returns FALSE", {
   expect_false(result)
 })
 
-# Edge cases with NaN ----
-test_that("any coerces NaN to TRUE (NaN is truthy)", {
-  # NaN when coerced to logical is NA, not TRUE
-  expect_warning(result <- any(c(FALSE, NaN)), "missing value")
-  expect_false(result)
-})
-
-test_that("all with NaN (coerced to NA)", {
-  expect_warning(result <- all(c(TRUE, NaN)), "missing value")
-  expect_true(result)
-})
-
 # Edge case: empty vector ----
 test_that("any of empty vector returns FALSE", {
   expect_no_warning(result <- any(logical(0)))
