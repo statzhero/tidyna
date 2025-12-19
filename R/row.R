@@ -34,7 +34,7 @@ rowSums <- function(x, na.rm = TRUE, dims = 1L, ...) {
 
   # Error if ALL rows are all-NA (entire matrix is NA)
   if (na.rm && all(all_na_rows)) {
-    cli::cli_abort("All values are NA; something likely went wrong.")
+    cli::cli_abort("All values are NA; check if something went wrong.")
   }
 
   if (na.rm && anyNA(x) && warn) {

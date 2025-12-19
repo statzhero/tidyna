@@ -8,6 +8,13 @@ x_mixed <- c(1, NA, NaN, Inf, 5)
 x_for_prod <- c(2, NA, 3)
 x_for_quantile <- c(1, NA, 2, 3, 4)
 
+# NA count in warnings ----
+test_that("warning reports correct NA count", {
+  expect_warning(mean(c(1, NA, 3)), "1 missing value")
+  expect_warning(mean(c(1, NA, NA, 3)), "2 missing values")
+  expect_warning(mean(c(NA, NA, NA, 1)), "3 missing values")
+})
+
 # mean ----
 test_that("mean removes NA and warns by default", {
   expect_warning(
@@ -142,29 +149,29 @@ test_that("quantile handles Inf at boundaries", {
 
 # Edge case: all-NA throws error ----
 test_that("mean of all-NA throws error", {
-  expect_error(mean(c(NA, NA)), "something likely went wrong")
+  expect_error(mean(c(NA, NA)), "check if something went wrong")
 })
 
 test_that("sum of all-NA throws error", {
-  expect_error(sum(c(NA, NA)), "something likely went wrong")
+  expect_error(sum(c(NA, NA)), "check if something went wrong")
 })
 
 test_that("prod of all-NA throws error", {
-  expect_error(prod(c(NA, NA)), "something likely went wrong")
+  expect_error(prod(c(NA, NA)), "check if something went wrong")
 })
 
 test_that("sd of all-NA throws error", {
-  expect_error(sd(c(NA, NA)), "something likely went wrong")
+  expect_error(sd(c(NA, NA)), "check if something went wrong")
 })
 
 test_that("var of all-NA throws error", {
-  expect_error(var(c(NA, NA)), "something likely went wrong")
+  expect_error(var(c(NA, NA)), "check if something went wrong")
 })
 
 test_that("median of all-NA throws error", {
-  expect_error(median(c(NA, NA)), "something likely went wrong")
+  expect_error(median(c(NA, NA)), "check if something went wrong")
 })
 
 test_that("quantile of all-NA throws error", {
-  expect_error(quantile(c(NA, NA)), "something likely went wrong")
+  expect_error(quantile(c(NA, NA)), "check if something went wrong")
 })

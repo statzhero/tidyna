@@ -92,19 +92,19 @@ test_that("max of mixed Inf returns Inf", {
 
 # Edge cases: all-NA throws error ----
 test_that("min of all-NA throws error", {
-  expect_error(min(c(NA, NA)), "something likely went wrong")
+  expect_error(min(c(NA, NA)), "check if something went wrong")
 })
 
 test_that("max of all-NA throws error", {
-  expect_error(max(c(NA, NA)), "something likely went wrong")
+  expect_error(max(c(NA, NA)), "check if something went wrong")
 })
 
 test_that("min of all-NaN throws error", {
-  expect_error(min(c(NaN, NaN)), "something likely went wrong")
+  expect_error(min(c(NaN, NaN)), "check if something went wrong")
 })
 
 test_that("max of all-NaN throws error", {
-  expect_error(max(c(NaN, NaN)), "something likely went wrong")
+  expect_error(max(c(NaN, NaN)), "check if something went wrong")
 })
 
 # Edge cases: empty vector preserves base R behavior ----

@@ -52,9 +52,9 @@ test_that("all of empty vector returns TRUE", {
 
 # Edge case: all NA throws error ----
 test_that("any of all-NA throws error", {
-  expect_error(any(c(NA, NA)), "something likely went wrong")
+  expect_error(any(c(NA, NA)), "check if something went wrong")
 })
 
 test_that("all of all-NA throws error", {
-  expect_error(all(c(NA, NA)), "something likely went wrong")
+  expect_error(all(c(NA, NA)), "check if something went wrong")
 })

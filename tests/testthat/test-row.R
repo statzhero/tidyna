@@ -9,6 +9,17 @@ mat_inf_cancel <- matrix(c(Inf, -Inf, 0, 1, 2, 3), nrow = 2, byrow = TRUE)
 mat_named <- matrix(1:4, nrow = 2, dimnames = list(c("a", "b"), NULL))
 df_with_na <- data.frame(x = c(1, NA), y = c(2, 3))
 
+# NA count in warnings ----
+test_that("warning reports correct NA count", {
+  mat_1na <- matrix(c(1, NA, 3, 4, 5, 6), nrow = 2, byrow = TRUE)
+  mat_3na <- matrix(c(1, NA, NA, NA, 5, 6), nrow = 2, byrow = TRUE)
+
+  expect_warning(rowSums(mat_1na), "1 missing value")
+  expect_warning(rowMeans(mat_1na), "1 missing value")
+  expect_warning(rowSums(mat_3na), "3 missing values")
+  expect_warning(rowMeans(mat_3na), "3 missing values")
+})
+
 # rowSums ----
 test_that("rowSums warns about removed NAs", {
   expect_warning(result <- rowSums(mat_with_na), "missing value")
@@ -29,7 +40,7 @@ test_that("rowSums returns NA for all-NA row and emits both warnings", {
 })
 
 test_that("rowSums of entirely NA matrix throws error", {
-  expect_error(rowSums(mat_entirely_na), "something likely went wrong")
+  expect_error(rowSums(mat_entirely_na), "check if something went wrong")
 })
 
 test_that("rowSums handles NaN (treated as NA)", {
@@ -84,7 +95,7 @@ test_that("rowMeans of all-NA row returns NaN", {
 })
 
 test_that("rowMeans of entirely NA matrix throws error", {
-  expect_error(rowMeans(mat_entirely_na), "something likely went wrong")
+  expect_error(rowMeans(mat_entirely_na), "check if something went wrong")
 })
 
 test_that("rowMeans handles NaN (treated as NA)", {

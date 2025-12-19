@@ -24,7 +24,7 @@ min <- function(..., na.rm = TRUE) {
 
   # Error if ALL values are NA/NaN
   if (na.rm && length(args) > 0 && all(is.na(args))) {
-    cli::cli_abort("All values are NA; something likely went wrong.")
+    cli::cli_abort("All values are NA; check if something went wrong.")
   }
 
   if (na.rm && isTRUE(getOption("tidyna.warn", TRUE))) {
@@ -51,7 +51,7 @@ max <- function(..., na.rm = TRUE) {
 
   # Error if ALL values are NA/NaN
   if (na.rm && length(args) > 0 && all(is.na(args))) {
-    cli::cli_abort("All values are NA; something likely went wrong.")
+    cli::cli_abort("All values are NA; check if something went wrong.")
   }
 
   if (na.rm && isTRUE(getOption("tidyna.warn", TRUE))) {

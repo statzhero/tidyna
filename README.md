@@ -42,13 +42,13 @@ Suppress warnings with `options(tidyna.warn = FALSE)`.
 
 ``` r
 sum(c(NA, NA))
-#> Error: All values are NA; something likely went wrong.
+#> Error: All values are NA; check if something went wrong.
 
 base::sum(c(NA, NA), na.rm = TRUE)
 #> [1] 0
 ```
 
-**`rowSums`** returns `NA` for all-NA rows (base R returns 0), but errors if the entire matrix is NA.
+**`rowSums`** returns `NA` for all-NA rows, but errors if the entire matrix is NA.
 
 **`cor`** defaults to `use = "pairwise.complete.obs"` instead of erroring on NAs.
 
