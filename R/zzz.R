@@ -21,10 +21,10 @@
     " " = cli::col_yellow("\u26a0\ufe0f tidyna masks core R stats functions."),
     ">" = "Masked: {.field {paste(fns, collapse = ', ')}}",
     " " = "\u2022 These now default to {.code na.rm = TRUE} and warn when NAs are removed.",
-    " " = "\u2022 Use {.code base::table()}, {.code stats::sd()}, etc. for original behaviour.",
+    ">" = "Masked with compareable behavior: {.field {paste(fns2, collapse = ', ')}}",
+    " " = "\u2022 Use {.code base::table()}, {.code stats::sd()}, etc. for original behavior.",
     " " = "\u2022 Silence NA warnings with {.code options(tidyna.warn = FALSE)}.",
-    ">" = "Masked with similar behavior: {.field {paste(fns2, collapse = ', ')}}",
-    ">" = "Silence this startup message with {.code suppressPackageStartupMessages(library(tidyna))}."
+    " " = "\u2022 Silence this startup message with {.code suppressPackageStartupMessages(library(tidyna))}."
   ))
 
   packageStartupMessage(msg)
