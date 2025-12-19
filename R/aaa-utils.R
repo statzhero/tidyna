@@ -9,10 +9,18 @@
 #' @noRd
 make_narm_true <- function(base_fn) {
   function(x, na.rm = TRUE, ...) {
-    if (na.rm && anyNA(x) && isTRUE(getOption("tidyna.warn", TRUE))) {
-      cli::cli_warn(
-        cli::col_yellow("\u26a0\ufe0f Missing values found and removed.")
-      )
+    if (na.rm && anyNA(x)) {
+      # Error if ALL values are NA/NaN
+      if (all(is.na(x))) {
+        cli::cli_abort("All values are NA; something likely went wrong.")
+      }
+      # Warn about removed NAs
+      if (isTRUE(getOption("tidyna.warn", TRUE))) {
+        n_na <- sum(is.na(x))
+        cli::cli_warn(
+          cli::col_yellow("\u26a0\ufe0f {n_na} missing value{?s} removed.")
+        )
+      }
     }
     base_fn(x, na.rm = na.rm, ...)
   }

@@ -1,25 +1,64 @@
 
 # tidyna
 
-<!-- badges: start -->
-<!-- badges: end -->
-
-The goal of tidyna is to ...
+Tired of littering your code with `na.rm = TRUE`? **tidyna** masks common R functions and warns you when NAs are removed.
 
 ## Installation
 
-You can install the development version of tidyna like so:
-
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# Stable version
+install.packages("tidyna")
+
+# or
+# install.packages("pak")
+pak::pak("statzhero/tidyna")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+## Usage
 
 ``` r
 library(tidyna)
-## basic example code
+
+x <- c(1, 2, NA)
+mean(x)
+#> ⚠️ 1 missing value removed.
+#> [1] 1.5
 ```
 
+Suppress warnings with `options(tidyna.warn = FALSE)`.
+
+## Functions
+
+- **Summary**: `mean`, `sum`, `prod`, `sd`, `var`, `median`, `quantile`
+- **Extrema**: `min`, `max`
+- **Logical**: `any`, `all`
+- **Row-wise**: `rowSums`, `rowMeans`
+- **Correlation**: `cor`
+- **Table**: `table`
+
+## Special cases
+
+**All-NA input throws error**: When all values are NA, tidyna throws an error instead of returning misleading values like `Inf`, `NaN`, or `0`:
+
+``` r
+sum(c(NA, NA))
+#> Error: All values are NA; something likely went wrong.
+
+base::sum(c(NA, NA), na.rm = TRUE)
+#> [1] 0
+```
+
+**`rowSums`** returns `NA` for all-NA rows (base R returns 0), but errors if the entire matrix is NA.
+
+**`cor`** defaults to `use = "pairwise.complete.obs"` instead of erroring on NAs.
+
+**`table`** defaults to `useNA = "ifany"`, showing NA counts when present rather than silently dropping them.
+
+## Roadmap
+
+**v0.2.0** will add explicit `_aware` suffixed versions (`mean_aware`, `sum_aware`, etc.) for users who prefer not to mask base functions.
+
+## Related packages
+
+- [naflex](https://cran.r-project.org/package=naflex): Conditional NA removal based on thresholds
+- [na.tools](https://cran.r-project.org/package=na.tools): Utilities for working with missing values

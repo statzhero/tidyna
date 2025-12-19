@@ -4,7 +4,7 @@
 \alias{row-functions}
 \alias{rowMeans}
 \alias{rowSums}
-\title{Safe Row-wise Functions}
+\title{NA-aware Row-wise Functions}
 \usage{
 rowMeans(x, na.rm = TRUE, ...)
 

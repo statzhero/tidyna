@@ -29,18 +29,25 @@ rowMeans <- make_narm_true(base::rowMeans)
 rowSums <- function(x, na.rm = TRUE, dims = 1L, ...) {
   warn <- isTRUE(getOption("tidyna.warn", TRUE))
 
-  if (na.rm && anyNA(x) && warn) {
-    cli::cli_warn(
-      cli::col_yellow("\u26a0\ufe0f Missing values found and removed.")
-    )
-  }
-
   # Identify rows where ALL values are NA
   all_na_rows <- apply(x, 1, function(row) all(is.na(row)))
 
-  if (any(all_na_rows) && warn) {
+  # Error if ALL rows are all-NA (entire matrix is NA)
+  if (na.rm && all(all_na_rows)) {
+    cli::cli_abort("All values are NA; something likely went wrong.")
+  }
+
+  if (na.rm && anyNA(x) && warn) {
+    n_na <- sum(is.na(x))
     cli::cli_warn(
-      cli::col_yellow("\u26a0\ufe0f One or more rows have all NA values.")
+      cli::col_yellow("\u26a0\ufe0f {n_na} missing value{?s} removed.")
+    )
+  }
+
+  if (any(all_na_rows) && warn) {
+    n_all_na <- sum(all_na_rows)
+    cli::cli_warn(
+      cli::col_yellow("\u26a0\ufe0f {n_all_na} row{?s} had all NA values.")
     )
   }
 

@@ -3,7 +3,7 @@
 \name{table-functions}
 \alias{table-functions}
 \alias{table}
-\title{Safe Table Function}
+\title{NA-aware Table Function}
 \usage{
 table(..., useNA = "ifany")
 }

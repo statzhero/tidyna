@@ -10,7 +10,7 @@ x_mixed <- c(1, NA, NaN, Inf, 5)
 test_that("mean removes NA and warns by default", {
   expect_warning(
     result <- mean(x_na),
-    "Missing values"
+    "missing value"
 
 )
   expect_equal(result, 2)
@@ -33,7 +33,7 @@ test_that("tidyna.warn option suppresses warnings", {
 })
 
 test_that("mean handles NaN (treated as NA)", {
-  expect_warning(result <- mean(x_nan), "Missing values")
+  expect_warning(result <- mean(x_nan), "missing value")
   expect_equal(result, 2)
 })
 
@@ -48,18 +48,18 @@ test_that("mean handles -Inf", {
 })
 
 test_that("mean handles mixed NA, NaN, Inf", {
-  expect_warning(result <- mean(x_mixed), "Missing values")
+  expect_warning(result <- mean(x_mixed), "missing value")
   expect_equal(result, Inf)
 })
 
 # sum ----
 test_that("sum removes NA and warns", {
-  expect_warning(result <- sum(x_na), "Missing values")
+  expect_warning(result <- sum(x_na), "missing value")
   expect_equal(result, 4)
 })
 
 test_that("sum handles NaN", {
-  expect_warning(result <- sum(x_nan), "Missing values")
+  expect_warning(result <- sum(x_nan), "missing value")
   expect_equal(result, 4)
 })
 
@@ -70,7 +70,7 @@ test_that("sum handles Inf", {
 
 # prod ----
 test_that("prod removes NA and warns", {
-  expect_warning(result <- prod(c(2, NA, 3)), "Missing values")
+  expect_warning(result <- prod(c(2, NA, 3)), "missing value")
   expect_equal(result, 6)
 })
 
@@ -86,12 +86,12 @@ test_that("prod handles zero with Inf", {
 
 # sd ----
 test_that("sd removes NA and warns", {
-  expect_warning(result <- sd(x_na), "Missing values")
+  expect_warning(result <- sd(x_na), "missing value")
   expect_equal(result, sd(c(1, 3)))
 })
 
 test_that("sd handles NaN", {
-  expect_warning(result <- sd(x_nan), "Missing values")
+  expect_warning(result <- sd(x_nan), "missing value")
   expect_equal(result, sd(c(1, 3)))
 })
 
@@ -102,18 +102,18 @@ test_that("sd with Inf returns NaN", {
 
 # var ----
 test_that("var removes NA and warns", {
-  expect_warning(result <- var(x_na), "Missing values")
+  expect_warning(result <- var(x_na), "missing value")
   expect_equal(result, var(c(1, 3)))
 })
 
 test_that("var handles NaN", {
-  expect_warning(result <- var(x_nan), "Missing values")
+  expect_warning(result <- var(x_nan), "missing value")
   expect_equal(result, var(c(1, 3)))
 })
 
 # median ----
 test_that("median removes NA and warns", {
-  expect_warning(result <- median(x_na), "Missing values")
+  expect_warning(result <- median(x_na), "missing value")
   expect_equal(result, 2)
 })
 
@@ -131,7 +131,7 @@ test_that("median handles -Inf", {
 test_that("quantile removes NA and warns", {
   expect_warning(
     result <- quantile(c(1, NA, 2, 3, 4), probs = 0.5),
-    "Missing values"
+    "missing value"
   )
   expect_equal(unname(result), 2.5)
 })
@@ -141,13 +141,31 @@ test_that("quantile handles Inf at boundaries", {
   expect_equal(unname(result), Inf)
 })
 
-# Edge case: empty after NA removal ----
-test_that("mean of all-NA returns NaN with warning", {
-  expect_warning(result <- mean(c(NA, NA)), "Missing values")
-  expect_true(is.nan(result))
+# Edge case: all-NA throws error ----
+test_that("mean of all-NA throws error", {
+  expect_error(mean(c(NA, NA)), "something likely went wrong")
 })
 
-test_that("sum of all-NA returns 0 with warning", {
-  expect_warning(result <- sum(c(NA, NA)), "Missing values")
-  expect_equal(result, 0)
+test_that("sum of all-NA throws error", {
+  expect_error(sum(c(NA, NA)), "something likely went wrong")
+})
+
+test_that("prod of all-NA throws error", {
+  expect_error(prod(c(NA, NA)), "something likely went wrong")
+})
+
+test_that("sd of all-NA throws error", {
+  expect_error(sd(c(NA, NA)), "something likely went wrong")
+})
+
+test_that("var of all-NA throws error", {
+  expect_error(var(c(NA, NA)), "something likely went wrong")
+})
+
+test_that("median of all-NA throws error", {
+  expect_error(median(c(NA, NA)), "something likely went wrong")
+})
+
+test_that("quantile of all-NA throws error", {
+  expect_error(quantile(c(NA, NA)), "something likely went wrong")
 })

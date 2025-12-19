@@ -3,7 +3,7 @@
 \name{correlation-functions}
 \alias{correlation-functions}
 \alias{cor}
-\title{Safe Correlation Function}
+\title{NA-aware Correlation Function}
 \usage{
 cor(
   x,

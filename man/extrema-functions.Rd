@@ -4,7 +4,7 @@
 \alias{extrema-functions}
 \alias{min}
 \alias{max}
-\title{Safe Extrema Functions}
+\title{NA-aware Extrema Functions}
 \usage{
 min(..., na.rm = TRUE)
 

@@ -6,7 +6,7 @@
 \alias{tidyna-package}
 \title{tidyna: Safe Defaults for Summary Functions with NA Removal Warnings}
 \description{
-Provides drop-in replacements for common summary functions (mean, sum, sd, var, min, max, etc.) that default to na.rm = TRUE while issuing warnings when missing values are removed. Helps prevent silent NA propagation in interactive analysis.
+**tidyna** provides drop-in replacements for common R stats functions (mean, sum, sd, var, min, max, etc.) that default to `na.rm = TRUE` while issuing warnings when missing values are removed. It handles some special cases. The `table` default is set to `useNA = ifany`.
 }
 \seealso{
 Useful links:

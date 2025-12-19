@@ -4,7 +4,7 @@
 \alias{logical-functions}
 \alias{any}
 \alias{all}
-\title{Safe Logical Functions}
+\title{NA-aware Logical Functions}
 \usage{
 any(x, na.rm = TRUE, ...)
 

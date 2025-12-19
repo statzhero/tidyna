@@ -9,7 +9,7 @@
 \alias{var}
 \alias{median}
 \alias{quantile}
-\title{Safe Summary Functions}
+\title{NA-aware Summary Functions}
 \usage{
 mean(x, na.rm = TRUE, ...)
 

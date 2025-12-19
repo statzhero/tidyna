@@ -7,12 +7,12 @@ mat_inf <- matrix(c(1, Inf, 3, 4, 5, 6), nrow = 2, byrow = TRUE)
 
 # rowSums ----
 test_that("rowSums returns NA for all-NA rows", {
-  expect_warning(result <- rowSums(mat_all_na), "all NA")
+  expect_warning(result <- rowSums(mat_all_na), "had all NA")
   expect_equal(result, c(4, NA))
 })
 
 test_that("rowSums warns about removed NAs", {
-  expect_warning(result <- rowSums(mat_na), "Missing values")
+  expect_warning(result <- rowSums(mat_na), "missing value")
   expect_equal(result, c(4, 15))
 })
 
@@ -22,7 +22,7 @@ test_that("rowSums with no NAs produces no warning", {
 })
 
 test_that("rowSums handles NaN (treated as NA)", {
-  expect_warning(result <- rowSums(mat_nan), "Missing values")
+  expect_warning(result <- rowSums(mat_nan), "missing value")
   expect_equal(result, c(4, 15))
 })
 
@@ -41,7 +41,7 @@ test_that("rowSums with na.rm = FALSE returns NA for rows with NA", {
 
 # rowMeans ----
 test_that("rowMeans warns about removed NAs", {
-  expect_warning(result <- rowMeans(mat_na), "Missing values")
+  expect_warning(result <- rowMeans(mat_na), "missing value")
   expect_equal(result, c(2, 5))
 })
 
@@ -51,7 +51,7 @@ test_that("rowMeans with no NAs produces no warning", {
 })
 
 test_that("rowMeans handles NaN (treated as NA)", {
-  expect_warning(result <- rowMeans(mat_nan), "Missing values")
+  expect_warning(result <- rowMeans(mat_nan), "missing value")
   expect_equal(result, c(2, 5))
 })
 
@@ -63,15 +63,25 @@ test_that("rowMeans handles Inf", {
 # Edge cases ----
 test_that("rowSums matrix with all-NA row returns NA for that row", {
   mat <- matrix(c(NA, NA, NA, 1, 2, 3), nrow = 2, byrow = TRUE)
-  expect_warning(result <- rowSums(mat), "all NA")
+  expect_warning(result <- rowSums(mat), "had all NA")
   expect_equal(result, c(NA, 6))
 })
 
 test_that("rowMeans of all-NA row returns NaN", {
   mat <- matrix(c(NA, NA, NA, 1, 2, 3), nrow = 2, byrow = TRUE)
-  expect_warning(result <- rowMeans(mat), "Missing values")
+  expect_warning(result <- rowMeans(mat), "missing value")
   expect_true(is.nan(result[1]))
   expect_equal(result[2], 2)
+})
+
+test_that("rowSums of entirely all-NA matrix throws error", {
+  mat <- matrix(NA, nrow = 2, ncol = 3)
+  expect_error(rowSums(mat), "something likely went wrong")
+})
+
+test_that("rowMeans of entirely all-NA matrix throws error", {
+  mat <- matrix(NA, nrow = 2, ncol = 3)
+  expect_error(rowMeans(mat), "something likely went wrong")
 })
 
 test_that("rowSums with mixed Inf and -Inf", {
@@ -90,12 +100,12 @@ test_that("rowSums preserves row names", {
 # Data frame input ----
 test_that("rowSums works with data frame", {
   df <- data.frame(x = c(1, NA), y = c(2, 3))
-  expect_warning(result <- rowSums(df), "Missing values")
+  expect_warning(result <- rowSums(df), "missing value")
   expect_equal(result, c(3, 3))
 })
 
 test_that("rowMeans works with data frame", {
   df <- data.frame(x = c(1, NA), y = c(2, 3))
-  expect_warning(result <- rowMeans(df), "Missing values")
+  expect_warning(result <- rowMeans(df), "missing value")
   expect_equal(result, c(1.5, 3))
 })

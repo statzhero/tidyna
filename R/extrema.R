@@ -21,10 +21,25 @@ NULL
 #' @export
 min <- function(..., na.rm = TRUE) {
   args <- c(...)
-  if (na.rm && anyNA(args) && isTRUE(getOption("tidyna.warn", TRUE))) {
-    cli::cli_warn(
-      cli::col_yellow("\u26a0\ufe0f Missing values found and removed.")
-    )
+
+  # Error if ALL values are NA/NaN
+  if (na.rm && length(args) > 0 && all(is.na(args))) {
+    cli::cli_abort("All values are NA; something likely went wrong.")
+  }
+
+  if (na.rm && isTRUE(getOption("tidyna.warn", TRUE))) {
+    n_nan <- sum(is.nan(args))
+    n_na <- sum(is.na(args) & !is.nan(args))
+    if (n_na > 0) {
+      cli::cli_warn(
+        cli::col_yellow("\u26a0\ufe0f {n_na} missing value{?s} removed.")
+      )
+    }
+    if (n_nan > 0) {
+      cli::cli_warn(
+        cli::col_yellow("\u26a0\ufe0f {n_nan} NaN value{?s} removed.")
+      )
+    }
   }
   base::min(..., na.rm = na.rm)
 }
@@ -33,10 +48,25 @@ min <- function(..., na.rm = TRUE) {
 #' @export
 max <- function(..., na.rm = TRUE) {
   args <- c(...)
-  if (na.rm && anyNA(args) && isTRUE(getOption("tidyna.warn", TRUE))) {
-    cli::cli_warn(
-      cli::col_yellow("\u26a0\ufe0f Missing values found and removed.")
-    )
+
+  # Error if ALL values are NA/NaN
+  if (na.rm && length(args) > 0 && all(is.na(args))) {
+    cli::cli_abort("All values are NA; something likely went wrong.")
+  }
+
+  if (na.rm && isTRUE(getOption("tidyna.warn", TRUE))) {
+    n_nan <- sum(is.nan(args))
+    n_na <- sum(is.na(args) & !is.nan(args))
+    if (n_na > 0) {
+      cli::cli_warn(
+        cli::col_yellow("\u26a0\ufe0f {n_na} missing value{?s} removed.")
+      )
+    }
+    if (n_nan > 0) {
+      cli::cli_warn(
+        cli::col_yellow("\u26a0\ufe0f {n_nan} NaN value{?s} removed.")
+      )
+    }
   }
   base::max(..., na.rm = na.rm)
 }
