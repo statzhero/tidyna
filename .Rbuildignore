@@ -1,0 +1,14 @@
+^tidyna\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^\.github$
+^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^vignettes/articles$
+_cache/
+^cran-comments\.md$
+^CRAN-SUBMISSION$
+^\.claude$
+^plans$
