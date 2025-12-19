@@ -4,10 +4,8 @@ Version: 0.1.0
 Authors@R:
     person("Ulrich", "Atz", , "ulrich.atz@unibocconi.it", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-1719-3780"))
-Description: Provides drop-in replacements for common summary functions
-    (mean, sum, sd, var, min, max, etc.) that default to na.rm = TRUE
-    while issuing warnings when missing values are removed. Helps prevent
-    silent NA propagation in interactive analysis.
+Description: **tidyna** provides drop-in replacements for common R stats functions (mean, sum, sd, var, min, max, etc.) that default to `na.rm = TRUE` while issuing warnings when missing values are removed. It handles some special cases. The `table` default is set to `useNA = ifany`.
+
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
