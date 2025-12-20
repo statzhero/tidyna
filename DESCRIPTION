@@ -1,6 +1,6 @@
 Package: tidyna
 Title: NA-Aware Defaults for Common R Functions
-Version: 0.1.0
+Version: 0.1.1
 Authors@R:
     person("Ulrich", "Atz", , "ulrich.atz@unibocconi.it", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-1719-3780"))
