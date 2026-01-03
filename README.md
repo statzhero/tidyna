@@ -1,12 +1,12 @@
 
 # tidyna
 
-Tired of littering your code with `na.rm = TRUE`? **tidyna** masks common R functions and warns you when NAs are removed. It handles some special cases. The `table()` default is set to `useNA = ifany`.
+Tired of littering your code with `na.rm = TRUE`? **tidyna** masks common R functions and warns you when NAs are removed. It handles some special cases. The `table()` default is set to `useNA = "ifany"`.
 
 ## Installation
 
 ``` r
-# Stable version
+# CRAN version
 install.packages("tidyna")
 
 # or
