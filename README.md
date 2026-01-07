@@ -56,7 +56,8 @@ base::sum(c(NA, NA), na.rm = TRUE)
 
 ## Roadmap
 
-**v0.2.0** will add explicit `_aware` suffixed versions (`mean_aware`, `sum_aware`, etc.) for users who prefer not to mask base functions.
+- Add explicit `_aware` suffixed versions (`mean_aware`, `sum_aware`, etc.) for users who prefer not to mask base functions.
+- Add further functions, in particular, `pmax` and `pmin`
 
 ## Related packages
 
