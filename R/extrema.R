@@ -6,6 +6,8 @@
 #' @param ... Numeric or character arguments.
 #' @param na.rm Logical. Should missing values be removed? Default `TRUE`.
 #'
+#' @return A length-one vector.
+#'
 #' @examples
 #' x <- c(1, NA, 5, 3)
 #' min(x)

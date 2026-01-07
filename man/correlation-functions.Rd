@@ -25,6 +25,9 @@ Default \code{"pairwise.complete.obs"}.}
 
 \item{...}{Additional arguments passed to \code{stats::cor()}.}
 }
+\value{
+A correlation matrix or single correlation coefficient.
+}
 \description{
 Drop-in replacement for \code{cor()} that defaults to
 \code{use = "pairwise.complete.obs"}.

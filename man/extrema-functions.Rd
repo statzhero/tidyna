@@ -15,6 +15,9 @@ max(..., na.rm = TRUE)
 
 \item{na.rm}{Logical. Should missing values be removed? Default \code{TRUE}.}
 }
+\value{
+A length-one vector.
+}
 \description{
 Drop-in replacements for \code{min()} and \code{max()} that default to \code{na.rm = TRUE}.
 }

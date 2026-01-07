@@ -17,6 +17,9 @@ all(x, na.rm = TRUE, ...)
 
 \item{...}{Additional arguments passed to the base function.}
 }
+\value{
+A single logical value.
+}
 \description{
 Drop-in replacements for \code{any()} and \code{all()} that default to \code{na.rm = TRUE}.
 }

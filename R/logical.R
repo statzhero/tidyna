@@ -5,6 +5,8 @@
 #'
 #' @inheritParams summary-functions
 #'
+#' @return A single logical value.
+#'
 #' @examples
 #' x <- c(TRUE, NA, FALSE)
 #' any(x)

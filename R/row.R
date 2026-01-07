@@ -10,6 +10,9 @@
 #' @param dims Integer. Number of dimensions to treat as rows.
 #' @param ... Additional arguments passed to the base function.
 #'
+#' @return A numeric or complex array of suitable size, or a vector if the
+#'   result is one-dimensional.
+#'
 #' @examples
 #' mat <- matrix(c(1, NA, 3, NA, NA, NA), nrow = 2, byrow = TRUE)
 #' rowSums(mat)

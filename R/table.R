@@ -7,6 +7,8 @@
 #' @param ... Objects to cross-tabulate.
 #' @param useNA Whether to include NA values. Default `"ifany"`.
 #'
+#' @return A contingency table of class `table`.
+#'
 #' @examples
 #' x <- c("a", "b", NA, "a", NA)
 #' table(x)

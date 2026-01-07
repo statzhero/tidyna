@@ -12,6 +12,9 @@ table(..., useNA = "ifany")
 
 \item{useNA}{Whether to include NA values. Default \code{"ifany"}.}
 }
+\value{
+A contingency table of class \code{table}.
+}
 \description{
 Drop-in replacement for \code{table()} that defaults to \code{useNA = "ifany"},
 showing NA counts when present.

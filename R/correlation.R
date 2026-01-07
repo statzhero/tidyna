@@ -11,6 +11,8 @@
 #' @param method Correlation method: "pearson", "kendall", or "spearman".
 #' @param ... Additional arguments passed to `stats::cor()`.
 #'
+#' @return A correlation matrix or single correlation coefficient.
+#'
 #' @examples
 #' x <- c(1, 2, NA, 4)
 #' y <- c(2, 4, 6, 8)

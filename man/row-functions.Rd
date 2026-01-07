@@ -19,6 +19,10 @@ rowSums(x, na.rm = TRUE, dims = 1L, ...)
 
 \item{dims}{Integer. Number of dimensions to treat as rows.}
 }
+\value{
+A numeric or complex array of suitable size, or a vector if the
+result is one-dimensional.
+}
 \description{
 Drop-in replacements for \code{rowMeans()} and \code{rowSums()} that default to
 \code{na.rm = TRUE}. Importantly, \code{rowSums()} returns \code{NA} for rows where
