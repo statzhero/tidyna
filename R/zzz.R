@@ -17,15 +17,19 @@
 
   fns2 <- c("rowMeans", "rowSums", "cor", "table")
 
-  msg <- cli::format_message(c(
-    " " = cli::col_yellow("\u26a0\ufe0f tidyna masks core R stats functions."),
-    ">" = "Masked: {.field {paste(fns, collapse = ', ')}}",
-    " " = "\u2022 These now default to {.code na.rm = TRUE} and warn when NAs are removed.",
-    ">" = "Masked with comparable behavior: {.field {paste(fns2, collapse = ', ')}}",
-    " " = "\u2022 Use {.code base::table()}, {.code stats::sd()}, etc. for original behavior.",
-    " " = "\u2022 Silence NA warnings with {.code options(tidyna.warn = FALSE)}.",
-    " " = "\u2022 Silence this startup message with {.code suppressPackageStartupMessages(library(tidyna))}."
-  ))
+  header <- cli::rule(
+    left = cli::col_br_yellow(paste0(cli::symbol$warning, " tidyna masks core R stats functions")),
+    right = paste0("tidyna ", utils::packageVersion("tidyna"))
+  )
 
-  packageStartupMessage(msg)
+  msg <- paste0(
+    cli::symbol$arrow_right, " Masked: ", cli::col_blue(paste(fns, collapse = ", ")), "\n",
+    "  \u2022 These now default to ", cli::col_cyan("na.rm = TRUE"), " and warn when NAs are removed.\n",
+    cli::symbol$arrow_right, " Masked with comparable behavior: ", cli::col_blue(paste(fns2, collapse = ", ")), "\n",
+    "  \u2022 Use ", cli::style_bold("base::table()"), ", ", cli::style_bold("stats::sd()"), ", etc. for original behavior.\n",
+    "  \u2022 Silence NA warnings with ", cli::col_cyan("options(tidyna.warn = FALSE)"), ".\n",
+    "  \u2022 Silence this startup message with ", cli::col_cyan("suppressPackageStartupMessages(library(tidyna))"), "."
+  )
+
+  packageStartupMessage(header, "\n", msg)
 }
