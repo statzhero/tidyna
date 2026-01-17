@@ -5,11 +5,14 @@ Tired of littering your code with `na.rm = TRUE`? **tidyna** masks common R func
 
 ## Installation
 
-``` r
-# CRAN version
-install.packages("tidyna")
+Install from CRAN:
 
-# or
+```r
+install.packages("tidyna")
+```
+Or install the development version from GitHub:
+
+```r
 # install.packages("pak")
 pak::pak("statzhero/tidyna")
 ```

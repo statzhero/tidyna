@@ -18,7 +18,7 @@
   fns2 <- c("rowMeans", "rowSums", "cor", "table")
 
   header <- cli::rule(
-    left = cli::col_br_yellow("\u26a0\ufe0f tidyna masks core R stats functions"),
+    left = cli::style_bold("\u26a0\ufe0f tidyna masks core R stats functions"),
     right = paste0("tidyna ", utils::packageVersion("tidyna"))
   )
 

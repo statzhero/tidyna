@@ -9,9 +9,11 @@
 docs/
 plans/
 
-.claude
 .positron
+.vscode
+.claude
 
 _problems/
 
 /.quarto/
+
