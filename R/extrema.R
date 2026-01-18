@@ -38,14 +38,21 @@ NULL
 #' @export
 min <- function(..., na.rm = TRUE) {
   args <- c(...)
+  warn <- isTRUE(getOption("tidyna.warn", TRUE))
 
-  if (na.rm && length(args) > 0 && all(is.na(args))) {
+  # Fast path: no NAs
+
+  if (!anyNA(args)) {
+    return(base::min(args, na.rm = FALSE))
+  }
+
+  if (na.rm && base::all(is.na(args))) {
     cli::cli_abort("All values are NA; check if something went wrong.")
   }
 
-  if (na.rm && isTRUE(getOption("tidyna.warn", TRUE))) {
-    n_nan <- sum(is.nan(args))
-    n_na <- sum(is.na(args) & !is.nan(args))
+  if (na.rm && warn) {
+    n_nan <- base::sum(is.nan(args))
+    n_na <- base::sum(is.na(args)) - n_nan
     if (n_na > 0) {
       cli::cli_warn(
         cli::col_yellow("\u26a0\ufe0f {n_na} missing value{?s} removed.")
@@ -57,21 +64,27 @@ min <- function(..., na.rm = TRUE) {
       )
     }
   }
-  base::min(..., na.rm = na.rm)
+  base::min(args, na.rm = na.rm)
 }
 
 #' @rdname extrema-functions
 #' @export
 max <- function(..., na.rm = TRUE) {
   args <- c(...)
+  warn <- isTRUE(getOption("tidyna.warn", TRUE))
 
-  if (na.rm && length(args) > 0 && all(is.na(args))) {
+  # Fast path: no NAs
+  if (!anyNA(args)) {
+    return(base::max(args, na.rm = FALSE))
+  }
+
+  if (na.rm && base::all(is.na(args))) {
     cli::cli_abort("All values are NA; check if something went wrong.")
   }
 
-  if (na.rm && isTRUE(getOption("tidyna.warn", TRUE))) {
-    n_nan <- sum(is.nan(args))
-    n_na <- sum(is.na(args) & !is.nan(args))
+  if (na.rm && warn) {
+    n_nan <- base::sum(is.nan(args))
+    n_na <- base::sum(is.na(args)) - n_nan
     if (n_na > 0) {
       cli::cli_warn(
         cli::col_yellow("\u26a0\ufe0f {n_na} missing value{?s} removed.")
@@ -83,7 +96,7 @@ max <- function(..., na.rm = TRUE) {
       )
     }
   }
-  base::max(..., na.rm = na.rm)
+  base::max(args, na.rm = na.rm)
 }
 
 #' @rdname extrema-functions
@@ -106,14 +119,14 @@ range <- function(..., na.rm = TRUE, finite = FALSE) {
     rep(FALSE, length(args))
   }
 
-  if (na.rm && length(args) > 0 && all(to_remove)) {
+  if (na.rm && length(args) > 0 && base::all(to_remove)) {
     cli::cli_abort("All values are NA or non-finite; check if something went wrong.")
   }
 
   if (na.rm && isTRUE(getOption("tidyna.warn", TRUE))) {
-    n_na <- sum(is_na_only)
-    n_nan <- sum(is_nan)
-    n_inf <- if (finite) sum(is_inf) else 0L
+    n_na <- base::sum(is_na_only)
+    n_nan <- base::sum(is_nan)
+    n_inf <- if (finite) base::sum(is_inf) else 0L
 
     if (n_na > 0) {
       cli::cli_warn(cli::col_yellow("\u26a0\ufe0f {n_na} missing value{?s} removed."))
@@ -137,18 +150,18 @@ pmax <- function(..., na.rm = TRUE) {
 
   if (length(args) == 0) return(base::pmax())
 
-  max_len <- max(lengths(args))
+  max_len <- base::max(lengths(args))
   args_recycled <- lapply(args, rep_len, max_len)
   all_na_positions <- Reduce(`&`, lapply(args_recycled, is.na))
 
-  if (na.rm && all(all_na_positions)) {
+  if (na.rm && base::all(all_na_positions)) {
     cli::cli_abort("All values are NA; check if something went wrong.")
   }
 
   if (na.rm && anyNA(unlist(args)) && warn) {
-    n_all_na <- sum(all_na_positions)
+    n_all_na <- base::sum(all_na_positions)
 
-    total_na <- sum(vapply(args_recycled, \(x) sum(is.na(x)), integer(1)))
+    total_na <- base::sum(vapply(args_recycled, \(x) base::sum(is.na(x)), integer(1)))
     n_removed <- total_na - n_all_na * length(args)
 
     if (n_removed > 0) {
@@ -174,18 +187,18 @@ pmin <- function(..., na.rm = TRUE) {
 
   if (length(args) == 0) return(base::pmin())
 
-  max_len <- max(lengths(args))
+  max_len <- base::max(lengths(args))
   args_recycled <- lapply(args, rep_len, max_len)
   all_na_positions <- Reduce(`&`, lapply(args_recycled, is.na))
 
-  if (na.rm && all(all_na_positions)) {
+  if (na.rm && base::all(all_na_positions)) {
     cli::cli_abort("All values are NA; check if something went wrong.")
   }
 
   if (na.rm && anyNA(unlist(args)) && warn) {
-    n_all_na <- sum(all_na_positions)
+    n_all_na <- base::sum(all_na_positions)
 
-    total_na <- sum(vapply(args_recycled, \(x) sum(is.na(x)), integer(1)))
+    total_na <- base::sum(vapply(args_recycled, \(x) base::sum(is.na(x)), integer(1)))
     n_removed <- total_na - n_all_na * length(args)
 
     if (n_removed > 0) {

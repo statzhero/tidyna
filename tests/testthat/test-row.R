@@ -88,10 +88,12 @@ test_that("rowMeans with no NAs produces no warning", {
   expect_equal(result, c(2, 5))
 })
 
-test_that("rowMeans of all-NA row returns NaN", {
-  expect_warning(result <- rowMeans(mat_row_all_na), "missing value")
-  expect_true(is.nan(result[1]))
-  expect_equal(result[2], 2)
+test_that("rowMeans returns NA for all-NA row and emits both warnings", {
+  expect_warning(
+    expect_warning(result <- rowMeans(mat_row_all_na), "missing value"),
+    "had all NA"
+  )
+  expect_equal(result, c(NA, 2))
 })
 
 test_that("rowMeans of entirely NA matrix throws error", {
