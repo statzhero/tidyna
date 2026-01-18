@@ -2,6 +2,7 @@
 # Uses bench::mark() per Advanced R recommendations
 # https://adv-r.hadley.nz/perf-measure.html
 
+devtools::load_all()
 library(bench)
 library(ggplot2)
 library(cli)
@@ -60,7 +61,7 @@ results <- bench::mark(
   time_unit = "ms"
 )
 
-print(results[, 1:5])
+print(results[, c("expression", "min", "median", "mem_alloc", "n_itr","n_gc")])
 
 # --- Chart -----------------
 plot_data <- data.frame(
@@ -70,14 +71,15 @@ plot_data <- data.frame(
 plot_data$package <- ifelse(grepl("tidyna", plot_data$expression), "tidyna", "base R")
 plot_data$fn <- sub("^.*::", "", plot_data$expression)
 
-fn_order <- c("mean", "median", "sd", "max", "sum", "cor", "any", "rowMeans", "rowSums")
+fn_order <- c("mean", "median", "sd", "sum", "max", "cor", "any", "rowMeans", "rowSums")
 plot_data$fn <- factor(plot_data$fn, levels = rev(fn_order))
 
-p <- ggplot(plot_data, aes(x = fn, y = median_ms, fill = package)) +
+(p <- ggplot(plot_data, aes(x = fn, y = median_ms, fill = package)) +
   geom_col(position = position_dodge(width = 0.8), width = 0.7) +
   coord_flip() +
   scale_fill_manual(
-    values = c("base R" = "#666666", "tidyna" = "#0072B2")
+    values = c("base R" = "#666666", "tidyna" = "#0072B2"),
+    guide = guide_legend(reverse = TRUE)
   ) +
   labs(
     title = "tidyna overhead vs base R (10M rows, 0.1% NAs)",
@@ -88,11 +90,12 @@ p <- ggplot(plot_data, aes(x = fn, y = median_ms, fill = package)) +
   ) +
   theme_light(base_size = 11) +
   theme(
-    legend.position = "top",
-    legend.justification = "left",
+    legend.position = c(0.82, 0.02),
+    legend.justification = c(0, 0),
+    legend.background = element_rect(fill = "white", color = NA),
     plot.title = element_text(face = "bold", size = 13),
     plot.caption = element_text(color = "#999999", size = 8)
-  )
+  ))
 
 ggsave("benchmarks/overhead.png", p, width = 8, height = 4, dpi = 150)
 cli_alert_success("Chart saved to benchmarks/overhead.png")

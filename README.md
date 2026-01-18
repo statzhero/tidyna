@@ -1,18 +1,20 @@
-
 # tidyna
 
-Tired of littering your code with `na.rm = TRUE`? **tidyna** masks common R functions and warns you when NAs are removed. It handles some special cases. The `table()` default is set to `useNA = "ifany"`.
+Tired of littering your code with `na.rm = TRUE`?
+
+**`tidyna`** masks common R functions and warns you when NAs are removed. It handles some special cases. The `table()` default is set to `useNA = "ifany"`.
 
 ## Installation
 
 Install from CRAN:
 
-```r
+``` r
 install.packages("tidyna")
 ```
+
 Or install the development version from GitHub:
 
-```r
+``` r
 # install.packages("pak")
 pak::pak("statzhero/tidyna")
 ```
@@ -32,12 +34,12 @@ Suppress warnings with `options(tidyna.warn = FALSE)`.
 
 ## Functions
 
-- **Summary**: `mean`, `sum`, `prod`, `sd`, `var`, `median`, `quantile`
-- **Extrema**: `min`, `max`, `range`, `pmax`, `pmin`
-- **Logical**: `any`, `all`
-- **Row-wise**: `rowSums`, `rowMeans`
-- **Correlation**: `cor`
-- **Table**: `table`
+-   **Summary**: `mean`, `sum`, `prod`, `sd`, `var`, `median`, `quantile`
+-   **Extrema**: `min`, `max`, `pmin`, `pmax`, `range`
+-   **Logical**: `any`, `all`
+-   **Row-wise**: `rowSums`, `rowMeans`
+-   **Correlation**: `cor`
+-   **Table**: `table`
 
 ## Special cases
 
@@ -51,7 +53,7 @@ base::sum(c(NA, NA), na.rm = TRUE)
 #> [1] 0
 ```
 
-**`rowSums`** returns `NA` for all-NA rows, but errors if the entire matrix is NA.
+**`rowSums`/`rowMeans`** return `NA` for all-NA rows, but error if the entire matrix is NA.
 
 **`pmax`/`pmin`** return `NA` for positions where all inputs are NA (with a warning), but error if every position is all-NA:
 
@@ -67,6 +69,16 @@ pmax(c(NA, NA), c(NA, NA))
 **`cor`** defaults to `use = "pairwise.complete.obs"` instead of erroring on NAs.
 
 **`table`** defaults to `useNA = "ifany"`, showing NA counts when present rather than silently dropping them.
+
+## Performance
+
+There is no free lunch. The `tidyna` package adds some overhead:
+
+![](benchmarks/overhead.png)
+
+For most functions like `mean()` the overhead is negligible (1.1x). But `rowMeans()` and `rowSums()` require an extra pass to detect all-NA rows, so there is a substantial loss (3-4x).
+
+I'm still working on whether the memory allocation needs to be addressed.
 
 ## Roadmap
 

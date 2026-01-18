@@ -47,7 +47,7 @@ min(c(5, NA), c(1, 2))
 
 # Parallel max/min
 pmax(c(1, 5, 3), c(2, 1, 4))
-pmin(c(1, NA, 3), c(NA, 2, 1))
+pmin(c(1, NA, 3), c(NA, NA, 1))
 
 # range with infinite values
 y <- c(1, Inf, 3, -Inf)

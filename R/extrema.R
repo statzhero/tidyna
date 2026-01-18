@@ -24,7 +24,7 @@
 #'
 #' # Parallel max/min
 #' pmax(c(1, 5, 3), c(2, 1, 4))
-#' pmin(c(1, NA, 3), c(NA, 2, 1))
+#' pmin(c(1, NA, 3), c(NA, NA, 1))
 #'
 #' # range with infinite values
 #' y <- c(1, Inf, 3, -Inf)
@@ -38,32 +38,28 @@ NULL
 #' @export
 min <- function(..., na.rm = TRUE) {
   args <- c(...)
-  warn <- isTRUE(getOption("tidyna.warn", TRUE))
 
-  # Fast path: no NAs
-
-  if (!anyNA(args)) {
-    return(base::min(args, na.rm = FALSE))
-  }
-
-  if (na.rm && base::all(is.na(args))) {
-    cli::cli_abort("All values are NA; check if something went wrong.")
-  }
-
-  if (na.rm && warn) {
-    n_nan <- base::sum(is.nan(args))
-    n_na <- base::sum(is.na(args)) - n_nan
-    if (n_na > 0) {
-      cli::cli_warn(
-        cli::col_yellow("\u26a0\ufe0f {n_na} missing value{?s} removed.")
-      )
+  if (na.rm && anyNA(args)) {
+    if (base::all(is.na(args))) {
+      cli::cli_abort("All values are NA; check if something went wrong.")
     }
-    if (n_nan > 0) {
-      cli::cli_warn(
-        cli::col_yellow("\u26a0\ufe0f {n_nan} NaN value{?s} removed.")
-      )
+
+    if (isTRUE(getOption("tidyna.warn", TRUE))) {
+      n_nan <- base::sum(is.nan(args))
+      n_na <- base::sum(is.na(args)) - n_nan
+      if (n_na > 0) {
+        cli::cli_warn(
+          cli::col_yellow("\u26a0\ufe0f {n_na} missing value{?s} removed.")
+        )
+      }
+      if (n_nan > 0) {
+        cli::cli_warn(
+          cli::col_yellow("\u26a0\ufe0f {n_nan} NaN value{?s} removed.")
+        )
+      }
     }
   }
+
   base::min(args, na.rm = na.rm)
 }
 
@@ -71,31 +67,28 @@ min <- function(..., na.rm = TRUE) {
 #' @export
 max <- function(..., na.rm = TRUE) {
   args <- c(...)
-  warn <- isTRUE(getOption("tidyna.warn", TRUE))
 
-  # Fast path: no NAs
-  if (!anyNA(args)) {
-    return(base::max(args, na.rm = FALSE))
-  }
-
-  if (na.rm && base::all(is.na(args))) {
-    cli::cli_abort("All values are NA; check if something went wrong.")
-  }
-
-  if (na.rm && warn) {
-    n_nan <- base::sum(is.nan(args))
-    n_na <- base::sum(is.na(args)) - n_nan
-    if (n_na > 0) {
-      cli::cli_warn(
-        cli::col_yellow("\u26a0\ufe0f {n_na} missing value{?s} removed.")
-      )
+  if (na.rm && anyNA(args)) {
+    if (base::all(is.na(args))) {
+      cli::cli_abort("All values are NA; check if something went wrong.")
     }
-    if (n_nan > 0) {
-      cli::cli_warn(
-        cli::col_yellow("\u26a0\ufe0f {n_nan} NaN value{?s} removed.")
-      )
+
+    if (isTRUE(getOption("tidyna.warn", TRUE))) {
+      n_nan <- base::sum(is.nan(args))
+      n_na <- base::sum(is.na(args)) - n_nan
+      if (n_na > 0) {
+        cli::cli_warn(
+          cli::col_yellow("\u26a0\ufe0f {n_na} missing value{?s} removed.")
+        )
+      }
+      if (n_nan > 0) {
+        cli::cli_warn(
+          cli::col_yellow("\u26a0\ufe0f {n_nan} NaN value{?s} removed.")
+        )
+      }
     }
   }
+
   base::max(args, na.rm = na.rm)
 }
 
@@ -104,17 +97,12 @@ max <- function(..., na.rm = TRUE) {
 range <- function(..., na.rm = TRUE, finite = FALSE) {
   args <- c(...)
 
-  # Match base::range() where finite = TRUE handles all non-finite values
   if (finite) na.rm <- TRUE
 
-  is_inf <- is.infinite(args)
-  is_nan <- is.nan(args)
-  is_na_only <- is.na(args) & !is_nan
-
   to_remove <- if (finite) {
-    is_na_only | is_nan | is_inf
+    !is.finite(args)
   } else if (na.rm) {
-    is_na_only | is_nan
+    is.na(args)
   } else {
     rep(FALSE, length(args))
   }
@@ -124,9 +112,9 @@ range <- function(..., na.rm = TRUE, finite = FALSE) {
   }
 
   if (na.rm && isTRUE(getOption("tidyna.warn", TRUE))) {
-    n_na <- base::sum(is_na_only)
-    n_nan <- base::sum(is_nan)
-    n_inf <- if (finite) base::sum(is_inf) else 0L
+    n_na <- base::sum(is.na(args) & !is.nan(args))
+    n_nan <- base::sum(is.nan(args))
+    n_inf <- if (finite) base::sum(is.infinite(args)) else 0L
 
     if (n_na > 0) {
       cli::cli_warn(cli::col_yellow("\u26a0\ufe0f {n_na} missing value{?s} removed."))

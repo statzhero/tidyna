@@ -6,7 +6,7 @@
 \alias{rowSums}
 \title{NA-aware Row-wise Functions}
 \usage{
-rowMeans(x, na.rm = TRUE, ...)
+rowMeans(x, na.rm = TRUE, dims = 1L, ...)
 
 rowSums(x, na.rm = TRUE, dims = 1L, ...)
 }
@@ -15,9 +15,9 @@ rowSums(x, na.rm = TRUE, dims = 1L, ...)
 
 \item{na.rm}{Logical. Should missing values be removed? Default \code{TRUE}.}
 
-\item{...}{Additional arguments passed to the base function.}
-
 \item{dims}{Integer. Number of dimensions to treat as rows.}
+
+\item{...}{Additional arguments passed to the base function.}
 }
 \value{
 A numeric or complex array of suitable size, or a vector if the
@@ -25,8 +25,8 @@ result is one-dimensional.
 }
 \description{
 Drop-in replacements for \code{rowMeans()} and \code{rowSums()} that default to
-\code{na.rm = TRUE}. Importantly, \code{rowSums()} returns \code{NA} for rows where
-ALL values are missing.
+\code{na.rm = TRUE}. Both return \code{NA} for rows where ALL values are missing
+(base \code{rowMeans()} returns \code{NaN}, base \code{rowSums()} returns \code{0}).
 }
 \examples{
 mat <- matrix(c(1, NA, 3, NA, NA, NA), nrow = 2, byrow = TRUE)
