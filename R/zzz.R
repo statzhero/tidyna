@@ -11,8 +11,8 @@
 .onAttach <- function(libname, pkgname) {
 
   fns <- c(
-    "mean", "sum", "prod", "min", "max", "range", "any", "all",
-    "sd", "var", "median", "quantile"
+    "mean", "sum", "prod", "min", "max", "range", "pmax", "pmin",
+    "any", "all", "sd", "var", "median", "quantile"
   )
 
   fns2 <- c("rowMeans", "rowSums", "cor", "table")

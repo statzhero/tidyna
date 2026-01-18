@@ -5,6 +5,8 @@
 \alias{min}
 \alias{max}
 \alias{range}
+\alias{pmax}
+\alias{pmin}
 \title{NA-aware Extrema Functions}
 \usage{
 min(..., na.rm = TRUE)
@@ -12,6 +14,10 @@ min(..., na.rm = TRUE)
 max(..., na.rm = TRUE)
 
 range(..., na.rm = TRUE, finite = FALSE)
+
+pmax(..., na.rm = TRUE)
+
+pmin(..., na.rm = TRUE)
 }
 \arguments{
 \item{...}{Numeric or character arguments.}
@@ -23,11 +29,12 @@ Inf, -Inf). Only applies to \code{range()}. Default \code{FALSE}.}
 }
 \value{
 For \code{min()} and \code{max()}, a length-one vector. For \code{range()}, a
-length-two vector containing the minimum and maximum.
+length-two vector containing the minimum and maximum. For \code{pmax()} and
+\code{pmin()}, a vector of length equal to the longest input.
 }
 \description{
-Drop-in replacements for \code{min()}, \code{max()}, and \code{range()} that default to
-\code{na.rm = TRUE}.
+Drop-in replacements for \code{min()}, \code{max()}, \code{range()}, \code{pmax()}, and \code{pmin()}
+that default to \code{na.rm = TRUE}.
 }
 \examples{
 x <- c(1, NA, 5, 3)
@@ -37,6 +44,10 @@ range(x)
 
 # Multiple arguments
 min(c(5, NA), c(1, 2))
+
+# Parallel max/min
+pmax(c(1, 5, 3), c(2, 1, 4))
+pmin(c(1, NA, 3), c(NA, 2, 1))
 
 # range with infinite values
 y <- c(1, Inf, 3, -Inf)

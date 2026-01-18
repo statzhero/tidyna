@@ -6,7 +6,7 @@
 #' base/stats functions:
 #' \itemize{
 #'   \item `mean`, `sum`, `prod` (base)
-#'   \item `min`, `max` (base)
+#'   \item `min`, `max`, `range`, `pmax`, `pmin` (base)
 #'   \item `any`, `all` (base)
 #'   \item `sd`, `var`, `median`, `quantile` (stats)
 #'   \item `rowMeans`, `rowSums` (base)

@@ -1,4 +1,6 @@
-# tidyna (development version)
+# tidyna 0.3.0
+
+* `pmax()` and `pmin()` now default to `na.rm = TRUE` and warn when NAs are removed. Positions where all inputs are NA return NA with a warning. All-NAs in every position yields an error.
 
 # tidyna 0.2.0
 

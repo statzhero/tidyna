@@ -220,3 +220,120 @@ test_that("range with multiple vectors containing NA", {
   expect_warning(result <- range(c(5, NA), c(1, 2)), "missing value")
   expect_equal(result, c(1, 5))
 })
+
+# pmax ----
+test_that("pmax removes NA and warns", {
+  expect_warning(
+    result <- pmax(c(1, NA, 3), c(2, 2, NA)),
+    "missing value"
+  )
+  expect_equal(result, c(2, 2, 3))
+})
+
+test_that("pmax warns about all-NA positions", {
+  expect_warning(
+    result <- pmax(c(NA, 1), c(NA, 2)),
+    "all NA"
+  )
+  expect_equal(result, c(NA, 2))
+})
+
+test_that("pmax warns separately about removed NAs and all-NA positions", {
+  # c(NA, NA, 1) and c(NA, 2, NA): position 1 is all-NA, positions 2 and 3 have removable NAs
+  warnings <- testthat::capture_warnings(
+    result <- pmax(c(NA, NA, 1), c(NA, 2, NA))
+  )
+  expect_equal(result, c(NA, 2, 1))
+  expect_length(warnings, 2)
+  expect_true(any(grepl("all NA", warnings)))
+  expect_true(any(grepl("missing value", warnings)))
+})
+
+test_that("pmax with na.rm = FALSE returns NA", {
+  expect_no_warning(result <- pmax(c(1, NA), c(2, 2), na.rm = FALSE))
+  expect_equal(result, c(2, NA))
+})
+
+test_that("pmax with no NAs produces no warning", {
+  expect_no_warning(result <- pmax(c(1, 2), c(2, 1)))
+  expect_equal(result, c(2, 2))
+})
+
+test_that("pmax preserves attributes from first argument", {
+  x <- c(a = 1, b = 2)
+  y <- c(2, 1)
+  result <- pmax(x, y)
+  expect_equal(names(result), c("a", "b"))
+})
+
+test_that("pmax errors when all positions are all-NA", {
+  expect_error(
+    pmax(c(NA, NA), c(NA, NA)),
+    "All values are NA"
+  )
+})
+
+test_that("pmax handles recycling", {
+  expect_no_warning(result <- pmax(c(1, 2, 3), 2))
+  expect_equal(result, c(2, 2, 3))
+})
+
+test_that("pmax with multiple arguments", {
+  expect_no_warning(result <- pmax(c(1, 5), c(3, 2), c(2, 4)))
+  expect_equal(result, c(3, 5))
+})
+
+# pmin ----
+test_that("pmin removes NA and warns", {
+  expect_warning(
+    result <- pmin(c(1, NA, 3), c(2, 2, NA)),
+    "missing value"
+  )
+  expect_equal(result, c(1, 2, 3))
+})
+
+test_that("pmin warns about all-NA positions", {
+  expect_warning(
+    result <- pmin(c(NA, 1), c(NA, 2)),
+    "all NA"
+  )
+  expect_equal(result, c(NA, 1))
+})
+
+test_that("pmin warns separately about removed NAs and all-NA positions", {
+  # c(NA, NA, 3) and c(NA, 2, NA): position 1 is all-NA, positions 2 and 3 have removable NAs
+  warnings <- testthat::capture_warnings(
+    result <- pmin(c(NA, NA, 3), c(NA, 2, NA))
+  )
+  expect_equal(result, c(NA, 2, 3))
+  expect_length(warnings, 2)
+  expect_true(any(grepl("all NA", warnings)))
+  expect_true(any(grepl("missing value", warnings)))
+})
+
+test_that("pmin with na.rm = FALSE returns NA", {
+  expect_no_warning(result <- pmin(c(1, NA), c(2, 2), na.rm = FALSE))
+  expect_equal(result, c(1, NA))
+})
+
+test_that("pmin with no NAs produces no warning", {
+  expect_no_warning(result <- pmin(c(1, 2), c(2, 1)))
+  expect_equal(result, c(1, 1))
+})
+
+test_that("pmin errors when all positions are all-NA", {
+  expect_error(
+    pmin(c(NA, NA), c(NA, NA)),
+    "All values are NA"
+  )
+})
+
+test_that("pmin handles recycling", {
+  expect_no_warning(result <- pmin(c(1, 2, 3), 2))
+  expect_equal(result, c(1, 2, 2))
+})
+
+test_that("pmin with multiple arguments", {
+  expect_no_warning(result <- pmin(c(1, 5), c(3, 2), c(2, 4)))
+  expect_equal(result, c(1, 2))
+})

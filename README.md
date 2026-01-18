@@ -33,7 +33,7 @@ Suppress warnings with `options(tidyna.warn = FALSE)`.
 ## Functions
 
 - **Summary**: `mean`, `sum`, `prod`, `sd`, `var`, `median`, `quantile`
-- **Extrema**: `min`, `max`, `range`
+- **Extrema**: `min`, `max`, `range`, `pmax`, `pmin`
 - **Logical**: `any`, `all`
 - **Row-wise**: `rowSums`, `rowMeans`
 - **Correlation**: `cor`
@@ -53,6 +53,17 @@ base::sum(c(NA, NA), na.rm = TRUE)
 
 **`rowSums`** returns `NA` for all-NA rows, but errors if the entire matrix is NA.
 
+**`pmax`/`pmin`** return `NA` for positions where all inputs are NA (with a warning), but error if every position is all-NA:
+
+``` r
+pmax(c(NA, 1), c(NA, 2))
+#> ⚠️ 1 position had all NA values.
+#> [1] NA  2
+
+pmax(c(NA, NA), c(NA, NA))
+#> Error: All values are NA; check if something went wrong.
+```
+
 **`cor`** defaults to `use = "pairwise.complete.obs"` instead of erroring on NAs.
 
 **`table`** defaults to `useNA = "ifany"`, showing NA counts when present rather than silently dropping them.
@@ -60,7 +71,6 @@ base::sum(c(NA, NA), na.rm = TRUE)
 ## Roadmap
 
 - Add explicit `_aware` suffixed versions (`mean_aware`, `sum_aware`, etc.) for users who prefer not to mask base functions.
-- Add further functions, in particular, `pmax` and `pmin`
 
 ## Related packages
 

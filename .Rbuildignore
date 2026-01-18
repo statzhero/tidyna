@@ -12,3 +12,4 @@ _cache/
 ^CRAN-SUBMISSION$
 ^\.claude$
 ^plans$
+^\.vscode$
