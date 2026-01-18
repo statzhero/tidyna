@@ -10,11 +10,9 @@
 make_narm_true <- function(base_fn) {
   function(x, na.rm = TRUE, ...) {
     if (na.rm && anyNA(x)) {
-      # Error if ALL values are NA/NaN
       if (all(is.na(x))) {
         cli::cli_abort("All values are NA; check if something went wrong.")
       }
-      # Warn about removed NAs
       if (isTRUE(getOption("tidyna.warn", TRUE))) {
         n_na <- sum(is.na(x))
         cli::cli_warn(

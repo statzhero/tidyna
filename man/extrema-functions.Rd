@@ -4,29 +4,43 @@
 \alias{extrema-functions}
 \alias{min}
 \alias{max}
+\alias{range}
 \title{NA-aware Extrema Functions}
 \usage{
 min(..., na.rm = TRUE)
 
 max(..., na.rm = TRUE)
+
+range(..., na.rm = TRUE, finite = FALSE)
 }
 \arguments{
 \item{...}{Numeric or character arguments.}
 
 \item{na.rm}{Logical. Should missing values be removed? Default \code{TRUE}.}
+
+\item{finite}{Logical. If \code{TRUE}, removes all non-finite values (NA, NaN,
+Inf, -Inf). Only applies to \code{range()}. Default \code{FALSE}.}
 }
 \value{
-A length-one vector.
+For \code{min()} and \code{max()}, a length-one vector. For \code{range()}, a
+length-two vector containing the minimum and maximum.
 }
 \description{
-Drop-in replacements for \code{min()} and \code{max()} that default to \code{na.rm = TRUE}.
+Drop-in replacements for \code{min()}, \code{max()}, and \code{range()} that default to
+\code{na.rm = TRUE}.
 }
 \examples{
 x <- c(1, NA, 5, 3)
 min(x)
 max(x)
+range(x)
 
 # Multiple arguments
 min(c(5, NA), c(1, 2))
+
+# range with infinite values
+y <- c(1, Inf, 3, -Inf)
+range(y)
+range(y, finite = TRUE)
 
 }

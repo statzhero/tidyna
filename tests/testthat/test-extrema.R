@@ -130,3 +130,93 @@ test_that("max with multiple vectors containing NA", {
   expect_warning(result <- max(c(1, NA), c(5, 2)), "missing value")
   expect_equal(result, 5)
 })
+
+# range ----
+test_that("range removes NA and warns", {
+  expect_warning(result <- range(x_na), "missing value")
+  expect_equal(result, c(1, 3))
+})
+
+test_that("range with no NAs produces no warning", {
+  expect_no_warning(result <- range(x_clean))
+  expect_equal(result, c(1, 3))
+})
+
+test_that("range with na.rm = FALSE returns NA", {
+  expect_no_warning(result <- range(x_na, na.rm = FALSE))
+  expect_true(all(is.na(result)))
+})
+
+test_that("range handles NaN with separate warning", {
+  expect_warning(result <- range(x_nan), "NaN value")
+  expect_equal(result, c(1, 5))
+})
+
+test_that("range with both NA and NaN issues both warnings", {
+  warnings <- testthat::capture_warnings(result <- range(x_na_and_nan))
+  expect_equal(result, c(1, 5))
+  expect_length(warnings, 2)
+  expect_true(any(grepl("missing value", warnings)))
+  expect_true(any(grepl("NaN value", warnings)))
+})
+
+test_that("range handles Inf without finite", {
+  expect_no_warning(result <- range(x_inf))
+  expect_equal(result, c(1, Inf))
+})
+
+test_that("range handles -Inf without finite", {
+  expect_no_warning(result <- range(x_neginf))
+  expect_equal(result, c(-Inf, 3))
+})
+
+test_that("range of mixed Inf returns both", {
+  expect_no_warning(result <- range(x_both_inf))
+  expect_equal(result, c(-Inf, Inf))
+})
+
+test_that("range with finite = TRUE removes Inf and warns", {
+  expect_warning(result <- range(x_inf, finite = TRUE), "infinite value")
+  expect_equal(result, c(1, 3))
+})
+
+test_that("range with finite = TRUE removes -Inf and warns", {
+  expect_warning(result <- range(x_neginf, finite = TRUE), "infinite value")
+  expect_equal(result, c(2, 3))
+})
+
+test_that("range with finite = TRUE removes both Inf/-Inf", {
+  expect_warning(result <- range(x_both_inf, finite = TRUE), "infinite value")
+  expect_equal(result, c(0, 0))
+})
+
+test_that("range with finite = TRUE removes NA and Inf with both warnings", {
+  x <- c(1, NA, Inf, 5)
+  warnings <- testthat::capture_warnings(result <- range(x, finite = TRUE))
+  expect_equal(result, c(1, 5))
+  expect_length(warnings, 2)
+  expect_true(any(grepl("missing value", warnings)))
+  expect_true(any(grepl("infinite value", warnings)))
+})
+
+test_that("range of all-NA throws error", {
+  expect_error(range(c(NA, NA)), "check if something went wrong")
+})
+
+test_that("range of all-NaN throws error", {
+  expect_error(range(c(NaN, NaN)), "check if something went wrong")
+})
+
+test_that("range of all non-finite throws error when finite = TRUE", {
+  expect_error(range(c(Inf, -Inf, NA), finite = TRUE), "check if something went wrong")
+})
+
+test_that("range of empty vector returns Inf/-Inf with base R warning", {
+  expect_warning(result <- range(numeric(0)), "no non-missing arguments")
+  expect_equal(result, c(Inf, -Inf))
+})
+
+test_that("range with multiple vectors containing NA", {
+  expect_warning(result <- range(c(5, NA), c(1, 2)), "missing value")
+  expect_equal(result, c(1, 5))
+})

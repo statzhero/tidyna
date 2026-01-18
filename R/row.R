@@ -32,10 +32,8 @@ rowMeans <- make_narm_true(base::rowMeans)
 rowSums <- function(x, na.rm = TRUE, dims = 1L, ...) {
   warn <- isTRUE(getOption("tidyna.warn", TRUE))
 
-  # Identify rows where ALL values are NA
-  all_na_rows <- apply(x, 1, function(row) all(is.na(row)))
+  all_na_rows <- apply(x, 1, \(row) all(is.na(row)))
 
-  # Error if ALL rows are all-NA (entire matrix is NA)
   if (na.rm && all(all_na_rows)) {
     cli::cli_abort("All values are NA; check if something went wrong.")
   }

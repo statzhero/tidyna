@@ -33,7 +33,7 @@ Suppress warnings with `options(tidyna.warn = FALSE)`.
 ## Functions
 
 - **Summary**: `mean`, `sum`, `prod`, `sd`, `var`, `median`, `quantile`
-- **Extrema**: `min`, `max`
+- **Extrema**: `min`, `max`, `range`
 - **Logical**: `any`, `all`
 - **Row-wise**: `rowSums`, `rowMeans`
 - **Correlation**: `cor`

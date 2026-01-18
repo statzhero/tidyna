@@ -11,7 +11,7 @@
 .onAttach <- function(libname, pkgname) {
 
   fns <- c(
-    "mean", "sum", "prod", "min", "max", "any", "all",
+    "mean", "sum", "prod", "min", "max", "range", "any", "all",
     "sd", "var", "median", "quantile"
   )
 

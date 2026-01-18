@@ -17,7 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Ulrich Atz \email{ulrich.atz@unibocconi.it} (\href{https://orcid.org/0000-0002-1719-3780}{ORCID})
+\strong{Maintainer}: Ulrich Atz \email{ulrich.atz@unibocconi.it} (\href{https://orcid.org/0000-0002-1719-3780}{ORCID}) [copyright holder]
 
 }
 \keyword{internal}
