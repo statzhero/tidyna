@@ -97,5 +97,5 @@ plot_data$fn <- factor(plot_data$fn, levels = rev(fn_order))
     plot.caption = element_text(color = "#999999", size = 8)
   ))
 
-ggsave("benchmarks/overhead.png", p, width = 8, height = 4, dpi = 150)
-cli_alert_success("Chart saved to benchmarks/overhead.png")
+ggsave("man/figures/overhead.png", p, width = 8, height = 4, dpi = 150)
+cli_alert_success("Chart saved to man/figures/overhead.png")

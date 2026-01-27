@@ -78,7 +78,7 @@ sum(c(NA, NA), all_na = "na")
 
 There is no free lunch. The `tidyna` package adds some overhead:
 
-![](benchmarks/overhead.png)
+![](man/figures/overhead.png)
 
 For most functions like `mean()` the overhead is negligible (1.1x). But `rowMeans()` and `rowSums()` require an extra pass to detect all-NA rows, so there is a substantial loss (3-4x).
 
