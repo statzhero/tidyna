@@ -1,3 +1,7 @@
+# tidyna 0.4.0
+
+* All functions now support configurable all-NA behavior via the `all_na` argument. Choose `"error"` (default, current behavior), `"base"` (return base R values like NaN, Inf, 0 depending on the function), or `"na"` (always return NA). Set globally with `options(tidyna.all_na = "base")`.
+
 # tidyna 0.3.0
 
 * `pmax()` and `pmin()` now default to `na.rm = TRUE` and warn when NAs are removed. Positions where all inputs are NA return NA with a warning. All-NAs in every position yields an error.

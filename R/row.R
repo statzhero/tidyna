@@ -7,6 +7,10 @@
 #'
 #' @param x A numeric matrix or data frame.
 #' @param na.rm Logical. Should missing values be removed? Default `TRUE`.
+#' @param all_na Character. What to do when all values are NA:
+#'   `"error"` (default) throws an error, `"base"` returns what base R does
+#'   with `na.rm = TRUE` (`NaN` for `rowMeans()`, `0` for `rowSums()`),
+#'   `"na"` returns `NA`. If `NULL`, uses `getOption("tidyna.all_na", "error")`.
 #' @param dims Integer. Number of dimensions to treat as rows.
 #' @param ... Additional arguments passed to the base function.
 #'
@@ -25,14 +29,18 @@ NULL
 
 #' @rdname row-functions
 #' @export
-rowMeans <- function(x, na.rm = TRUE, dims = 1L, ...) {
+rowMeans <- function(x, na.rm = TRUE, all_na = NULL, dims = 1L, ...) {
+  all_na <- resolve_all_na(all_na)
   warn <- isTRUE(getOption("tidyna.warn", TRUE))
 
-  # Vectorized: count non-NA values per row via base::rowSums
   all_na_rows <- base::rowSums(!is.na(x), dims = dims) == 0L
 
   if (na.rm && base::all(all_na_rows)) {
-    cli::cli_abort("All values are NA; check if something went wrong.")
+    return(switch(all_na,
+      error = cli::cli_abort("All values are NA; check if something went wrong."),
+      base = base::rowMeans(x, na.rm = TRUE, dims = dims, ...),
+      na = rep(NA_real_, nrow(x))
+    ))
   }
 
   if (na.rm && anyNA(x) && warn) {
@@ -56,14 +64,18 @@ rowMeans <- function(x, na.rm = TRUE, dims = 1L, ...) {
 
 #' @rdname row-functions
 #' @export
-rowSums <- function(x, na.rm = TRUE, dims = 1L, ...) {
+rowSums <- function(x, na.rm = TRUE, all_na = NULL, dims = 1L, ...) {
+  all_na <- resolve_all_na(all_na)
   warn <- isTRUE(getOption("tidyna.warn", TRUE))
 
-  # Vectorized: count non-NA values per row via base::rowSums
   all_na_rows <- base::rowSums(!is.na(x), dims = dims) == 0L
 
   if (na.rm && base::all(all_na_rows)) {
-    cli::cli_abort("All values are NA; check if something went wrong.")
+    return(switch(all_na,
+      error = cli::cli_abort("All values are NA; check if something went wrong."),
+      base = base::rowSums(x, na.rm = TRUE, dims = dims, ...),
+      na = rep(NA_real_, nrow(x))
+    ))
   }
 
   if (na.rm && anyNA(x) && warn) {

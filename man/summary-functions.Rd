@@ -11,24 +11,29 @@
 \alias{quantile}
 \title{NA-aware Summary Functions}
 \usage{
-mean(x, na.rm = TRUE, ...)
+mean(x, na.rm = TRUE, all_na = NULL, ...)
 
-sum(x, na.rm = TRUE, ...)
+sum(x, na.rm = TRUE, all_na = NULL, ...)
 
-prod(x, na.rm = TRUE, ...)
+prod(x, na.rm = TRUE, all_na = NULL, ...)
 
-sd(x, na.rm = TRUE, ...)
+sd(x, na.rm = TRUE, all_na = NULL, ...)
 
-var(x, na.rm = TRUE, ...)
+var(x, na.rm = TRUE, all_na = NULL, ...)
 
-median(x, na.rm = TRUE, ...)
+median(x, na.rm = TRUE, all_na = NULL, ...)
 
-quantile(x, na.rm = TRUE, ...)
+quantile(x, na.rm = TRUE, all_na = NULL, ...)
 }
 \arguments{
 \item{x}{A numeric vector.}
 
 \item{na.rm}{Logical. Should missing values be removed? Default \code{TRUE}.}
+
+\item{all_na}{Character. What to do when all values are NA:
+\code{"error"} (default) throws an error, \code{"base"} returns what base R does
+with \code{na.rm = TRUE} (e.g., \code{NaN} for \code{mean()}, \code{0} for \code{sum()}),
+\code{"na"} returns \code{NA}. If \code{NULL}, uses \code{getOption("tidyna.all_na", "error")}.}
 
 \item{...}{Additional arguments passed to the base function.}
 }
@@ -48,7 +53,7 @@ options(tidyna.warn = FALSE)
 mean(x)
 options(tidyna.warn = TRUE)
 
-# Use base behavior
-mean(x, na.rm = FALSE)
+# Control all-NA behavior
+mean(c(NA, NA), all_na = "na")
 
 }

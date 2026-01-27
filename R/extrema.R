@@ -6,6 +6,10 @@
 #'
 #' @param ... Numeric or character arguments.
 #' @param na.rm Logical. Should missing values be removed? Default `TRUE`.
+#' @param all_na Character. What to do when all values are NA:
+#'   `"error"` (default) throws an error, `"base"` returns what base R does
+#'   with `na.rm = TRUE` (e.g., `Inf` for `min()`, `-Inf` for `max()`),
+#'   `"na"` returns `NA`. If `NULL`, uses `getOption("tidyna.all_na", "error")`.
 #' @param finite Logical. If `TRUE`, removes all non-finite values (NA, NaN,
 #'   Inf, -Inf). Only applies to `range()`. Default `FALSE`.
 #'
@@ -36,12 +40,17 @@ NULL
 
 #' @rdname extrema-functions
 #' @export
-min <- function(..., na.rm = TRUE) {
+min <- function(..., na.rm = TRUE, all_na = NULL) {
   args <- c(...)
+  all_na <- resolve_all_na(all_na)
 
   if (na.rm && anyNA(args)) {
     if (base::all(is.na(args))) {
-      cli::cli_abort("All values are NA; check if something went wrong.")
+      return(switch(all_na,
+        error = cli::cli_abort("All values are NA; check if something went wrong."),
+        base = base::min(args, na.rm = TRUE),
+        na = NA_real_
+      ))
     }
 
     if (isTRUE(getOption("tidyna.warn", TRUE))) {
@@ -65,12 +74,17 @@ min <- function(..., na.rm = TRUE) {
 
 #' @rdname extrema-functions
 #' @export
-max <- function(..., na.rm = TRUE) {
+max <- function(..., na.rm = TRUE, all_na = NULL) {
   args <- c(...)
+  all_na <- resolve_all_na(all_na)
 
   if (na.rm && anyNA(args)) {
     if (base::all(is.na(args))) {
-      cli::cli_abort("All values are NA; check if something went wrong.")
+      return(switch(all_na,
+        error = cli::cli_abort("All values are NA; check if something went wrong."),
+        base = base::max(args, na.rm = TRUE),
+        na = NA_real_
+      ))
     }
 
     if (isTRUE(getOption("tidyna.warn", TRUE))) {
@@ -94,8 +108,9 @@ max <- function(..., na.rm = TRUE) {
 
 #' @rdname extrema-functions
 #' @export
-range <- function(..., na.rm = TRUE, finite = FALSE) {
+range <- function(..., na.rm = TRUE, all_na = NULL, finite = FALSE) {
   args <- c(...)
+  all_na <- resolve_all_na(all_na)
 
   if (finite) na.rm <- TRUE
 
@@ -108,7 +123,11 @@ range <- function(..., na.rm = TRUE, finite = FALSE) {
   }
 
   if (na.rm && length(args) > 0 && base::all(to_remove)) {
-    cli::cli_abort("All values are NA or non-finite; check if something went wrong.")
+    return(switch(all_na,
+      error = cli::cli_abort("All values are NA or non-finite; check if something went wrong."),
+      base = base::range(..., na.rm = TRUE, finite = finite),
+      na = c(NA_real_, NA_real_)
+    ))
   }
 
   if (na.rm && isTRUE(getOption("tidyna.warn", TRUE))) {
@@ -132,8 +151,9 @@ range <- function(..., na.rm = TRUE, finite = FALSE) {
 
 #' @rdname extrema-functions
 #' @export
-pmax <- function(..., na.rm = TRUE) {
+pmax <- function(..., na.rm = TRUE, all_na = NULL) {
   args <- list(...)
+  all_na <- resolve_all_na(all_na)
   warn <- isTRUE(getOption("tidyna.warn", TRUE))
 
   if (length(args) == 0) return(base::pmax())
@@ -143,7 +163,11 @@ pmax <- function(..., na.rm = TRUE) {
   all_na_positions <- Reduce(`&`, lapply(args_recycled, is.na))
 
   if (na.rm && base::all(all_na_positions)) {
-    cli::cli_abort("All values are NA; check if something went wrong.")
+    return(switch(all_na,
+      error = cli::cli_abort("All values are NA; check if something went wrong."),
+      base = base::pmax(..., na.rm = TRUE),
+      na = rep(NA_real_, max_len)
+    ))
   }
 
   if (na.rm && anyNA(unlist(args)) && warn) {
@@ -169,8 +193,9 @@ pmax <- function(..., na.rm = TRUE) {
 
 #' @rdname extrema-functions
 #' @export
-pmin <- function(..., na.rm = TRUE) {
+pmin <- function(..., na.rm = TRUE, all_na = NULL) {
   args <- list(...)
+  all_na <- resolve_all_na(all_na)
   warn <- isTRUE(getOption("tidyna.warn", TRUE))
 
   if (length(args) == 0) return(base::pmin())
@@ -180,7 +205,11 @@ pmin <- function(..., na.rm = TRUE) {
   all_na_positions <- Reduce(`&`, lapply(args_recycled, is.na))
 
   if (na.rm && base::all(all_na_positions)) {
-    cli::cli_abort("All values are NA; check if something went wrong.")
+    return(switch(all_na,
+      error = cli::cli_abort("All values are NA; check if something went wrong."),
+      base = base::pmin(..., na.rm = TRUE),
+      na = rep(NA_real_, max_len)
+    ))
   }
 
   if (na.rm && anyNA(unlist(args)) && warn) {

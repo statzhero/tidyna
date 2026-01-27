@@ -3,7 +3,13 @@
 #' @description
 #' Drop-in replacements for `any()` and `all()` that default to `na.rm = TRUE`.
 #'
-#' @inheritParams summary-functions
+#' @param x A logical vector.
+#' @param na.rm Logical. Should missing values be removed? Default `TRUE`.
+#' @param all_na Character. What to do when all values are NA:
+#'   `"error"` (default) throws an error, `"base"` returns what base R does
+#'   with `na.rm = TRUE` (`FALSE` for `any()`, `TRUE` for `all()`),
+#'   `"na"` returns `NA`. If `NULL`, uses `getOption("tidyna.all_na", "error")`.
+#' @param ... Additional arguments passed to the base function.
 #'
 #' @return A single logical value.
 #'

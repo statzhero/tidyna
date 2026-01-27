@@ -6,6 +6,10 @@
 #'
 #' @param x A numeric vector.
 #' @param na.rm Logical. Should missing values be removed? Default `TRUE`.
+#' @param all_na Character. What to do when all values are NA:
+#'   `"error"` (default) throws an error, `"base"` returns what base R does
+#'   with `na.rm = TRUE` (e.g., `NaN` for `mean()`, `0` for `sum()`),
+#'   `"na"` returns `NA`. If `NULL`, uses `getOption("tidyna.all_na", "error")`.
 #' @param ... Additional arguments passed to the base function.
 #'
 #' @return The computed summary statistic.
@@ -19,8 +23,8 @@
 #' mean(x)
 #' options(tidyna.warn = TRUE)
 #'
-#' # Use base behavior
-#' mean(x, na.rm = FALSE)
+#' # Control all-NA behavior
+#' mean(c(NA, NA), all_na = "na")
 #'
 #' @name summary-functions
 NULL

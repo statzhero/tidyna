@@ -9,20 +9,25 @@
 \alias{pmin}
 \title{NA-aware Extrema Functions}
 \usage{
-min(..., na.rm = TRUE)
+min(..., na.rm = TRUE, all_na = NULL)
 
-max(..., na.rm = TRUE)
+max(..., na.rm = TRUE, all_na = NULL)
 
-range(..., na.rm = TRUE, finite = FALSE)
+range(..., na.rm = TRUE, all_na = NULL, finite = FALSE)
 
-pmax(..., na.rm = TRUE)
+pmax(..., na.rm = TRUE, all_na = NULL)
 
-pmin(..., na.rm = TRUE)
+pmin(..., na.rm = TRUE, all_na = NULL)
 }
 \arguments{
 \item{...}{Numeric or character arguments.}
 
 \item{na.rm}{Logical. Should missing values be removed? Default \code{TRUE}.}
+
+\item{all_na}{Character. What to do when all values are NA:
+\code{"error"} (default) throws an error, \code{"base"} returns what base R does
+with \code{na.rm = TRUE} (e.g., \code{Inf} for \code{min()}, \code{-Inf} for \code{max()}),
+\code{"na"} returns \code{NA}. If \code{NULL}, uses \code{getOption("tidyna.all_na", "error")}.}
 
 \item{finite}{Logical. If \code{TRUE}, removes all non-finite values (NA, NaN,
 Inf, -Inf). Only applies to \code{range()}. Default \code{FALSE}.}

@@ -17,6 +17,9 @@
 #' @section Options:
 #' \itemize{
 #'   \item `tidyna.warn`: Set to `FALSE` to suppress warnings. Default `TRUE`.
+#'   \item `tidyna.all_na`: Controls behavior when all values are NA. One of
+#'     `"error"` (default, throws an error), `"base"` (returns base R behavior),
+#'     or `"na"` (returns NA).
 #' }
 #'
 #' @section Related packages:

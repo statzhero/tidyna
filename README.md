@@ -43,28 +43,32 @@ Suppress warnings with `options(tidyna.warn = FALSE)`.
 
 ## Special cases
 
-**All-NA input throws error**: When all values are NA, tidyna throws an error instead of returning misleading values like `Inf`, `NaN`, or `0`:
+**All-NA input is configurable**: By default, tidyna throws an error when all values are NA to prevent misleading values like `Inf`, `NaN`, or `0`:
 
 ``` r
-sum(c(NA, NA))
-#> Error: All values are NA; check if something went wrong.
-
 base::sum(c(NA, NA), na.rm = TRUE)
 #> [1] 0
+
+sum(c(NA, NA))
+#> Error in `sum()`:
+#> ! All values are NA; check if something went wrong.
 ```
 
-**`rowSums`/`rowMeans`** return `NA` for all-NA rows, but error if the entire matrix is NA.
-
-**`pmax`/`pmin`** return `NA` for positions where all inputs are NA (with a warning), but error if every position is all-NA:
+You can change this behavior with the `all_na` argument or the `tidyna.all_na` option:
 
 ``` r
-pmax(c(NA, 1), c(NA, 2))
-#> ⚠️ 1 position had all NA values.
-#> [1] NA  2
+# Return base R behavior (NaN, Inf, 0, etc.)
+sum(c(NA, NA), all_na = "base")
+#> [1] 0
 
-pmax(c(NA, NA), c(NA, NA))
-#> Error: All values are NA; check if something went wrong.
+# Always return NA
+sum(c(NA, NA), all_na = "na")
+#> [1] NA
 ```
+
+**`rowSums`/`rowMeans`** return `NA` for all-NA rows, but error if the entire matrix is NA. Also configurable via `all_na`.
+
+**`pmax`/`pmin`** return `NA` for positions where all inputs are NA (with a warning), but error if every position is all-NA. Also configurable via `all_na`.
 
 **`cor`** defaults to `use = "pairwise.complete.obs"` instead of erroring on NAs.
 
@@ -82,9 +86,9 @@ I'm still working on whether the memory allocation needs to be addressed.
 
 ## Roadmap
 
-- Add explicit `_aware` suffixed versions (`mean_aware`, `sum_aware`, etc.) for users who prefer not to mask base functions.
+-   Add explicit `_aware` suffixed versions (`mean_aware`, `sum_aware`, etc.) for users who prefer not to mask base functions.
 
 ## Related packages
 
-- [naflex](https://cran.r-project.org/package=naflex): Conditional NA removal based on thresholds
-- [na.tools](https://cran.r-project.org/package=na.tools): Utilities for working with missing values
+-   [naflex](https://cran.r-project.org/package=naflex): Conditional NA removal based on thresholds
+-   [na.tools](https://cran.r-project.org/package=na.tools): Utilities for working with missing values

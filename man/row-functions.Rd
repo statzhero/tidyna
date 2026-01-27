@@ -6,14 +6,19 @@
 \alias{rowSums}
 \title{NA-aware Row-wise Functions}
 \usage{
-rowMeans(x, na.rm = TRUE, dims = 1L, ...)
+rowMeans(x, na.rm = TRUE, all_na = NULL, dims = 1L, ...)
 
-rowSums(x, na.rm = TRUE, dims = 1L, ...)
+rowSums(x, na.rm = TRUE, all_na = NULL, dims = 1L, ...)
 }
 \arguments{
 \item{x}{A numeric matrix or data frame.}
 
 \item{na.rm}{Logical. Should missing values be removed? Default \code{TRUE}.}
+
+\item{all_na}{Character. What to do when all values are NA:
+\code{"error"} (default) throws an error, \code{"base"} returns what base R does
+with \code{na.rm = TRUE} (\code{NaN} for \code{rowMeans()}, \code{0} for \code{rowSums()}),
+\code{"na"} returns \code{NA}. If \code{NULL}, uses \code{getOption("tidyna.all_na", "error")}.}
 
 \item{dims}{Integer. Number of dimensions to treat as rows.}
 
