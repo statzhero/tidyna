@@ -1,3 +1,7 @@
+# tidyna 0.4.1
+
+* `quantile()` now works without naming the `probs` argument, e.g., `quantile(x, c(0.25, 0.5, 0.75))`.
+
 # tidyna 0.4.0
 
 * All functions now support configurable all-NA behavior via the `all_na` argument. Choose `"error"` (default, current behavior), `"base"` (return base R values like NaN, Inf, 0 depending on the function), or `"na"` (always return NA). Set globally with `options(tidyna.all_na = "base")`.

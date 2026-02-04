@@ -6,12 +6,14 @@
 \alias{all}
 \title{NA-aware Logical Functions}
 \usage{
-any(x, na.rm = TRUE, all_na = NULL, ...)
+any(x, ..., na.rm = TRUE, all_na = NULL)
 
-all(x, na.rm = TRUE, all_na = NULL, ...)
+all(x, ..., na.rm = TRUE, all_na = NULL)
 }
 \arguments{
 \item{x}{A logical vector.}
+
+\item{...}{Additional arguments passed to the base function.}
 
 \item{na.rm}{Logical. Should missing values be removed? Default \code{TRUE}.}
 
@@ -19,8 +21,6 @@ all(x, na.rm = TRUE, all_na = NULL, ...)
 \code{"error"} (default) throws an error, \code{"base"} returns what base R does
 with \code{na.rm = TRUE} (\code{FALSE} for \code{any()}, \code{TRUE} for \code{all()}),
 \code{"na"} returns \code{NA}. If \code{NULL}, uses \code{getOption("tidyna.all_na", "error")}.}
-
-\item{...}{Additional arguments passed to the base function.}
 }
 \value{
 A single logical value.

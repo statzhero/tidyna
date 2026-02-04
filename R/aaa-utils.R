@@ -22,13 +22,13 @@ resolve_all_na <- function(all_na = NULL) {
 #' @keywords internal
 #' @noRd
 make_narm_true <- function(base_fn) {
-  function(x, na.rm = TRUE, all_na = NULL, ...) {
+  function(x, ..., na.rm = TRUE, all_na = NULL) {
     all_na <- resolve_all_na(all_na)
     if (na.rm && anyNA(x)) {
       if (base::all(is.na(x))) {
         return(switch(all_na,
           error = cli::cli_abort("All values are NA; check if something went wrong."),
-          base = base_fn(x, na.rm = TRUE, ...),
+          base = base_fn(x, ..., na.rm = TRUE),
           na = NA
         ))
       }
@@ -39,6 +39,6 @@ make_narm_true <- function(base_fn) {
         )
       }
     }
-    base_fn(x, na.rm = na.rm, ...)
+    base_fn(x, ..., na.rm = na.rm)
   }
 }

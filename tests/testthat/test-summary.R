@@ -147,6 +147,22 @@ test_that("quantile handles Inf at boundaries", {
   expect_equal(unname(result), Inf)
 })
 
+test_that("quantile works with multiple probs (named argument)", {
+  expect_warning(
+    result <- quantile(x_for_quantile, probs = c(0.25, 0.5, 0.75)),
+    "missing value"
+  )
+  expect_length(result, 3)
+})
+
+test_that("quantile works with multiple probs (positional argument)", {
+  expect_warning(
+    result <- quantile(x_for_quantile, c(0.25, 0.5, 0.75)),
+    "missing value"
+  )
+  expect_length(result, 3)
+})
+
 # Edge case: all-NA throws error ----
 test_that("mean of all-NA throws error", {
   expect_error(mean(c(NA, NA)), "check if something went wrong")
