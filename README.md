@@ -1,8 +1,5 @@
+\# tidyna <!-- badges: start --> [![CRAN status](https://www.r-pkg.org/badges/version/tidyna)](https://CRAN.R-project.org/package=tidyna) [![GitHub version](https://img.shields.io/github/r-package/v/statzhero/tidyna)](https://github.com/statzhero/tidyna) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
-  # tidyna
-<!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version/tidyna)](https://CRAN.R-project.org/package=tidyna)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) 
 <!-- badges: end -->
 
 Tired of littering your code with `na.rm = TRUE`?
@@ -39,12 +36,12 @@ Suppress warnings with `options(tidyna.warn = FALSE)`.
 
 ## Functions
 
--   **Summary**: `mean`, `sum`, `prod`, `sd`, `var`, `median`, `quantile`
--   **Extrema**: `min`, `max`, `pmin`, `pmax`, `range`
--   **Logical**: `any`, `all`
--   **Row-wise**: `rowSums`, `rowMeans`
--   **Correlation**: `cor`
--   **Table**: `table`
+- **Summary**: `mean`, `sum`, `prod`, `sd`, `var`, `median`, `quantile`
+- **Extrema**: `min`, `max`, `pmin`, `pmax`, `range`
+- **Logical**: `any`, `all`
+- **Row-wise**: `rowSums`, `rowMeans`
+- **Correlation**: `cor`
+- **Table**: `table`
 
 ## Special cases
 
@@ -91,9 +88,9 @@ I'm still working on whether the memory allocation needs to be addressed.
 
 ## Roadmap
 
--   Add explicit `_aware` suffixed versions (`mean_aware`, `sum_aware`, etc.) for users who prefer not to mask base functions.
+- Add explicit `_aware` suffixed versions (`mean_aware`, `sum_aware`, etc.) for users who prefer not to mask base functions.
 
 ## Related packages
 
--   [naflex](https://cran.r-project.org/package=naflex): Conditional NA removal based on thresholds
--   [na.tools](https://cran.r-project.org/package=na.tools): Utilities for working with missing values
+- [naflex](https://cran.r-project.org/package=naflex): Conditional NA removal based on thresholds
+- [na.tools](https://cran.r-project.org/package=na.tools): Utilities for working with missing values
