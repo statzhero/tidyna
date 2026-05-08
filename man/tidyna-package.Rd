@@ -8,6 +8,41 @@
 \description{
 Provides drop-in replacements for common R functions (mean(), sum(), sd(), min(), etc.) that default to 'na.rm = TRUE' and issue warnings when missing values are removed. It handles some special cases. The table() default is set to 'useNA = ifany'.
 }
+\section{Masked functions}{
+
+When you attach tidyna with \code{library(tidyna)}, it masks these
+base/stats functions:
+\itemize{
+\item \code{mean}, \code{sum}, \code{prod} (base)
+\item \code{min}, \code{max}, \code{range}, \code{pmax}, \code{pmin} (base)
+\item \code{any}, \code{all} (base)
+\item \code{sd}, \code{var}, \code{median}, \code{quantile} (stats)
+\item \code{rowMeans}, \code{rowSums} (base)
+\item \code{cor} (stats)
+\item \code{table} (base)
+}
+}
+
+\section{Options}{
+
+\itemize{
+\item \code{tidyna.warn}: Set to \code{FALSE} to suppress warnings. Default \code{TRUE}.
+\item \code{tidyna.all_na}: Controls behavior when all values are NA. One of
+\code{"error"} (default, throws an error), \code{"base"} (returns base R behavior),
+or \code{"na"} (returns NA).
+}
+}
+
+\section{Related packages}{
+
+\itemize{
+\item \href{https://cran.r-project.org/package=naflex}{naflex}: Conditional
+NA removal based on thresholds (e.g., remove only if <5)
+\item \href{https://cran.r-project.org/package=na.tools}{na.tools}:
+Utilities for working with missing values
+}
+}
+
 \seealso{
 Useful links:
 \itemize{
@@ -18,6 +53,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Ulrich Atz \email{ulrich.atz@unibocconi.it} (\href{https://orcid.org/0000-0002-1719-3780}{ORCID}) [copyright holder]
+
+Authors:
+\itemize{
+  \item Ulrich Atz \email{ulrich.atz@unibocconi.it} (\href{https://orcid.org/0000-0002-1719-3780}{ORCID}) [copyright holder]
+}
 
 }
 \keyword{internal}
