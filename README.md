@@ -1,4 +1,6 @@
-\# tidyna <!-- badges: start --> [![CRAN status](https://www.r-pkg.org/badges/version/tidyna)](https://CRAN.R-project.org/package=tidyna) [![GitHub version](https://img.shields.io/github/r-package/v/statzhero/tidyna)](https://github.com/statzhero/tidyna) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+# tidyna 
+
+<!-- badges: start --> [![CRAN status](https://www.r-pkg.org/badges/version/tidyna)](https://CRAN.R-project.org/package=tidyna) [![GitHub version](https://img.shields.io/github/r-package/v/statzhero/tidyna)](https://github.com/statzhero/tidyna) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
 <!-- badges: end -->
 
