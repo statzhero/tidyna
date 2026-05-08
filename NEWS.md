@@ -1,3 +1,7 @@
+# tidyna 0.5.0
+
+* `weighted.mean()` now defaults to `na.rm = TRUE` and warns when missing values are removed. Unlike base R, missing values in either `x` or `w` cause the corresponding pair to be dropped.
+
 # tidyna 0.4.1
 
 * `quantile()` now works without naming the `probs` argument, e.g., `quantile(x, c(0.25, 0.5, 0.75))`.

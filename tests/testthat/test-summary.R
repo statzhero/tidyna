@@ -191,3 +191,62 @@ test_that("median of all-NA throws error", {
 test_that("quantile of all-NA throws error", {
   expect_error(quantile(c(NA, NA)), "check if something went wrong")
 })
+
+# weighted.mean ----
+test_that("weighted.mean removes NA in x and warns", {
+  x <- c(1, NA, 3)
+  w <- c(1, 1, 1)
+  expect_warning(result <- weighted.mean(x, w), "1 missing value")
+  expect_equal(result, stats::weighted.mean(c(1, 3), c(1, 1)))
+})
+
+test_that("weighted.mean removes NA in w and warns", {
+  x <- c(1, 2, 3)
+  w <- c(1, NA, 1)
+  expect_warning(result <- weighted.mean(x, w), "1 missing value")
+  expect_equal(result, stats::weighted.mean(c(1, 3), c(1, 1)))
+})
+
+test_that("weighted.mean removes paired NAs in both x and w", {
+  x <- c(1, NA, 3, 4)
+  w <- c(1, 1, NA, 1)
+  expect_warning(result <- weighted.mean(x, w), "2 missing values")
+  expect_equal(result, stats::weighted.mean(c(1, 4), c(1, 1)))
+})
+
+test_that("weighted.mean with no NAs produces no warning", {
+  expect_no_warning(result <- weighted.mean(c(1, 2, 3), c(1, 2, 3)))
+  expect_equal(result, stats::weighted.mean(c(1, 2, 3), c(1, 2, 3)))
+})
+
+test_that("weighted.mean with na.rm = FALSE returns NA without warning", {
+  x <- c(1, NA, 3)
+  w <- c(1, 1, 1)
+  expect_no_warning(result <- weighted.mean(x, w, na.rm = FALSE))
+  expect_true(is.na(result))
+})
+
+test_that("weighted.mean respects tidyna.warn option", {
+  withr::with_options(list(tidyna.warn = FALSE), {
+    expect_no_warning(weighted.mean(c(1, NA, 3), c(1, 1, 1)))
+  })
+})
+
+test_that("weighted.mean of all-NA throws error", {
+  expect_error(
+    weighted.mean(c(NA, NA), c(1, 1)),
+    "check if something went wrong"
+  )
+})
+
+test_that("weighted.mean of all-NA with all_na = 'na' returns NA", {
+  result <- suppressWarnings(
+    weighted.mean(c(NA, NA), c(1, 1), all_na = "na")
+  )
+  expect_true(is.na(result))
+})
+
+test_that("weighted.mean works without explicit w argument", {
+  expect_warning(result <- weighted.mean(c(1, NA, 3)), "1 missing value")
+  expect_equal(result, base::mean(c(1, 3)))
+})
