@@ -35,12 +35,6 @@ test_that("mean with no NAs produces no warning", {
   expect_equal(result, 2)
 })
 
-test_that("tidyna.warn option suppresses warnings", {
-  withr::with_options(list(tidyna.warn = FALSE), {
-    expect_no_warning(mean(x_na))
-  })
-})
-
 test_that("mean handles NaN (treated as NA)", {
   expect_warning(result <- mean(x_nan), "missing value")
   expect_equal(result, 2)

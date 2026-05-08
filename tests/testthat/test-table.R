@@ -106,9 +106,3 @@ test_that("table respects dnn argument", {
   expect_equal(names(dimnames(result)), "Table")
 })
 
-test_that("table respects dnn argument", {
-  result <- table(x_clean, dnn = "Table")
-
-  expect_equal(names(dimnames(result)), "Table")
-})
-

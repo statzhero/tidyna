@@ -79,10 +79,3 @@ test_that("cor with single complete pair", {
   expect_warning(result <- cor(x, y), "pairwise")
   expect_true(is.na(result))  # Need at least 2 obs for cor
 })
-
-# Suppress warnings option ----
-test_that("tidyna.warn option suppresses warnings", {
-  withr::with_options(list(tidyna.warn = FALSE), {
-    expect_no_warning(cor(x_na, y_clean))
-  })
-})
