@@ -1,0 +1,70 @@
+url: https://statzhero.github.io/tidyna/
+
+template:
+  bootstrap: 5
+  light-switch: true
+  bslib:
+    navbar-light-bg: "#df7100"
+    navbar-dark-bg: "#b35a00"
+    navbar-light-color: "#ffffff"
+    navbar-dark-color: "#e0e0e0"
+
+navbar:
+  structure:
+    left: [intro, home, reference, news]
+    right: [search, github, lightswitch]
+  components:
+    home:
+      text: Readme
+      href: index.html
+    news:
+      text: News
+      href: news/index.html
+
+footer:
+  structure:
+    left: developed_by
+    right: built_with
+
+home:
+  sidebar:
+    structure: [links, community, citation, authors, dev, license]
+
+reference:
+- title: Summary statistics
+  desc: NA-aware replacements for common summary functions.
+- contents:
+  - mean
+  - median
+  - sum
+  - prod
+  - sd
+  - var
+  - quantile
+  - weighted.mean
+- title: Extrema
+  desc: NA-aware replacements for min, max, and range functions.
+- contents:
+  - min
+  - max
+  - range
+  - pmin
+  - pmax
+- title: Logical
+  desc: NA-aware replacements for logical aggregation.
+- contents:
+  - any
+  - all
+- title: Row-wise
+  desc: NA-aware row-wise operations.
+- contents:
+  - rowMeans
+  - rowSums
+- title: Correlation
+  desc: NA-aware correlation with pairwise complete observations.
+- contents:
+  - cor
+- title: Table
+  desc: Table with NA counts shown by default.
+- contents:
+  - table
