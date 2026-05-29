@@ -3,6 +3,7 @@ url: https://statzhero.github.io/tidyna/
 template:
   bootstrap: 5
   light-switch: true
+  llm: full
   bslib:
     navbar-light-bg: "#df7100"
     navbar-dark-bg: "#b35a00"
